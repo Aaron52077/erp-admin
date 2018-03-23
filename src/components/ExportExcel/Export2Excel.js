@@ -1,6 +1,6 @@
 /* eslint-disable */
 require('script-loader!file-saver');
-require('script-loader!@/components/vendor/Blob');
+require('script-loader!@/components/ExportExcel/Blob');
 import XLSX from 'xlsx'
 
 function generateArray(table) {

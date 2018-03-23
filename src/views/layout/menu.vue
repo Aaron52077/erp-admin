@@ -1,14 +1,14 @@
 <template>
-<i-sticky sticky-class="sticky-nav">
-    <el-aside id="menu" :width="hasCollapse">
+<scroll-bar>
+    <el-aside class="sidebar-container" id="menu">
         <div class="sticky-nav-bd">
              <!-- logo -->
             <router-link class="logo" to="/">
                 <img src="~@/assets/img/dectop-logo.png" alt="">
             </router-link>
             <!-- 侧边导航 -->
-            <!-- type="border-card" -->
-            <el-tabs class="el-tabs-container" tab-position="left" @tab-click="isCollapse = true">    
+            <!-- @tab-click="toggleSideBar" -->
+            <el-tabs class="el-tabs-container" tab-position="left">    
                 <el-tab-pane label="营销">
                     <span slot="label" class="icon-navbar"><i class="i-icon-formdata"></i> 营销</span>
                     <div class="tabs-hd">
@@ -41,6 +41,7 @@
                     <div class="tabs-hd">
                         <h3>设计</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
@@ -52,6 +53,7 @@
                     <div class="tabs-hd">
                         <h3>合同</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
@@ -63,6 +65,7 @@
                     <div class="tabs-hd">
                         <h3>工程</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
@@ -74,6 +77,7 @@
                     <div class="tabs-hd">
                         <h3>材料</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
@@ -85,6 +89,7 @@
                     <div class="tabs-hd">
                         <h3>成控</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
@@ -96,6 +101,7 @@
                     <div class="tabs-hd">
                         <h3>报表</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
@@ -107,17 +113,13 @@
                     <div class="tabs-hd">
                         <h3>设置</h3>
                         <el-input
+                            size="small"
                             placeholder="请输入内容"
                             prefix-icon="el-icon-search"
                             v-model="input21">
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <div class="sticky-deploy" @click="isCollapse=!isCollapse">
-                    <el-tooltip class="item" effect="dark" content="收起" placement="top-end">
-                        <i class="i-icon-menu"></i>  
-                    </el-tooltip>
-                </div>
             </el-tabs>
             <div class="user">
                 <el-popover
@@ -190,11 +192,13 @@
             </div>
         </div> 
     </el-aside>
-</i-sticky>
+</scroll-bar>
 </template>
 <script>
 import { mapState } from 'vuex'
 import { routes } from '@/router'
+import Hamburger from '@/components/Hamburger'
+import ScrollBar from '@/components/ScrollBar'
 export default {
     name: 'i-menu',
     data() {
@@ -202,18 +206,14 @@ export default {
             filterRoutes: [],       // 过滤后的路由
             defaultOpeneds: [],     // 默认打开的二级菜单
             input21: '',
-            tipsVisible: false,
-            isCollapse: true        // 默认展开右侧面板
+            tipsVisible: false
         }
     },
     computed: {
         ...mapState([
             'user',
             'logs'
-        ]),
-        hasCollapse() {
-            return this.isCollapse?'301px':'70px'
-        }
+        ])
     },
     methods: {
         // 过滤路由
@@ -260,7 +260,8 @@ export default {
     },
     created() {
         this.handleIndexRoutes()
-    }
+    },
+    components: { ScrollBar }
 }
 </script>
 <style lang='less'>
@@ -268,7 +269,7 @@ export default {
 @appColor: #22d7bb;
 .sticky-nav {
     position: relative;
-    height: 100%;
+    .transition(position 1s ease);
     border-right: 1px solid #ddd;
     &-bd {
         .display-flex();
@@ -279,7 +280,11 @@ export default {
     .el-menu {
         border-right: none;
     }
-    .sticky-deploy {
+}
+.sidebar-container {
+    height: 100%;
+    .transition(width .3s);
+    .sticky-menu {
         position: absolute;
         top: 22px;
         right: 10px;
@@ -287,10 +292,6 @@ export default {
             font-size: @fs * 2;
         }
     }
-}
-#menu {
-    height: 100%;
-    .transition(width .3s);
     .logo {
         position: absolute;
         left: 0;

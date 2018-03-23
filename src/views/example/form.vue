@@ -37,94 +37,40 @@
             </el-form-item>
         </el-form>
         <div class="wrapper">
-            <!-- 自定义草稿功能 -->
-            <div class="recovery" v-if="draft">
-                已从草稿中恢复
-                <el-button type="text" class="cancle" @click.stop="handleDraft('remove')">撤销</el-button>
-            </div>
 
-            <div class="writer">
-                <!-- 标题 -->
-                <div class="title">
-                    <input type='text' placeholder="标题 (5-30个字符)" v-model.trim="title">
-                    <div class="title-count" :class="{'error': (title.length < 5 || title.length > 30) && title.length > 0}">{{title.length}} / 30</div>
-                </div>
+         
                 <!-- 正文 -->
                 <div class="content">
                     <quill-editor v-model.trim="content" ref="myQuillEditor" :options="editorOption">
                         <!-- slot方式 -->
-                        <i-sticky slot="toolbar">
-                            <div id="toolbar">
-                                <div class="ql-formats">
-                                    <button class="ql-header" value="1" title="H1标题"></button>
-                                    <button class="ql-bold" title="加粗"></button>
-                                    <button class="ql-italic" title="斜体"></button>
-                                    <button class="ql-underline" title="下划线"></button>
-                                    <button class="ql-strike" title="删除线"></button>
-                                    <button class="ql-blockquote" title="引用"></button>
-                                    <button class="ql-list" value='ordered' title="有序列表"></button>
-                                    <button class="ql-list" value="bullet" title="无序列表"></button>
-                                </div>
-                                <div class='ql-formats'>
-                                    <!-- 自定义上传图片按钮 -->
-                                    <el-button icon="el-icon-picture" title="插入图片" style="font-size: 16px;" @click.stop="uploadPictureVisible = true"></el-button>
-                                    <button class="ql-link" title="文章链接"></button>
-                                    <button class="ql-video" title="插入视频"></button>
-                                </div>
-                                <div class="ql-formats">
-                                    <button class="ql-clean" title="清除格式"></button>
-                                    <!-- 自定义撤销和重做 -->
-                                    <button class="undo" title="撤销" @click.stop="editor.history.undo()"><i class="el-icon-my-undo"></i></button>
-                                    <button class="redo" title="重做" @click.stop="editor.history.redo()"><i class="el-icon-my-redo"></i></button>
-                                </div>
-                                <!-- 自定义保存状态 -->
-                                <div class="draftSave" :class="{on : isSave}"></div>
+                        <div id="toolbar" slot="toolbar">
+                            <div class="ql-formats">
+                                <button class="ql-header" value="1" title="H1标题"></button>
+                                <button class="ql-bold" title="加粗"></button>
+                                <button class="ql-italic" title="斜体"></button>
+                                <button class="ql-underline" title="下划线"></button>
+                                <button class="ql-strike" title="删除线"></button>
+                                <button class="ql-blockquote" title="引用"></button>
+                                <button class="ql-list" value='ordered' title="有序列表"></button>
+                                <button class="ql-list" value="bullet" title="无序列表"></button>
                             </div>
-                        </i-sticky>
+                            <div class='ql-formats'>
+                                <!-- 自定义上传图片按钮 -->
+                                <el-button icon="el-icon-picture" title="插入图片" style="font-size: 16px;" @click.stop="uploadPictureVisible = true"></el-button>
+                                <button class="ql-link" title="文章链接"></button>
+                                <button class="ql-video" title="插入视频"></button>
+                            </div>
+                            <div class="ql-formats">
+                                <button class="ql-clean" title="清除格式"></button>
+                                <!-- 自定义撤销和重做 -->
+                                <button class="undo" title="撤销" @click.stop="editor.history.undo()"><i class="el-icon-my-undo"></i></button>
+                                <button class="redo" title="重做" @click.stop="editor.history.redo()"><i class="el-icon-my-redo"></i></button>
+                            </div>
+                            <!-- 自定义保存状态 -->
+                            <div class="draftSave" :class="{on : isSave}"></div>
+                        </div>
                     </quill-editor>
                 </div>
-            </div>
-
-            <div class="edit">
-                <div class="cover edit-cell">
-                    <div class="cover-label">封面</div>
-                    <div class="cover-input">
-                        <div class="select-radio">
-                            <el-radio-group v-model="cover_mode">
-                                <el-radio :label="1">单图</el-radio>
-                                <el-radio :label="3">三图</el-radio>
-                            </el-radio-group>
-                        </div>
-                        <!-- 单图 -->
-                        <div class="cover-images"> 
-                            <template v-for="({index}) in cover_mode">
-                                <div class="cover-img" v-if="coverImages[index]" @click="openSelectPicture(index)">
-                                    <img :src="coverImages[index]">
-                                </div>
-                                <div class="cover-add" v-else @click="openSelectPicture(index)">
-                                    <i class="el-icon-plus"></i>
-                                </div>
-                            </template>
-                        </div>
-                        <!-- 提示 -->
-                        <div class="cover-tip">优质的封面有利于推荐，请使用清晰度较高的图片，避免使用GIF、带大量文字的图片。</div>
-                    </div>
-                     <div class="control edit-cell">
-                        <el-button type='primary' size='large' @click.stop="verify('publish')">发表</el-button>
-                        <el-button class="gray" type='primary' size='large' @click.stop="verify('draft')">存草稿</el-button>
-                        <el-button class="gray" type='primary' size='large' @click.stop="openPreview">预览</el-button>
-                        <el-button class="gray" type='primary' size='large' @click.stop="$router.go(-1)">取消</el-button>
-                    </div>
-                </div>
-                <!-- 自定义上传图片 -->
-                <upload-picture  v-if="uploadPictureVisible" @complete="inserPicture" @close="uploadPictureVisible = false"></upload-picture>
-
-                <!-- 选择封面图 -->
-                <select-picture v-if="selectPictureVisible" :json="contentImages"  @complete="inserCover" @close="selectPictureVisible = false"></select-picture>
-
-                <!-- 预览 -->
-                <preview-article v-if="previewVisible" :json="previewJson" @close="previewVisible = false"></preview-article>
-            </div>
         </div>
     </div>
 </template>

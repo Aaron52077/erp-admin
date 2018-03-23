@@ -1,23 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const _import = require('./_import_' + process.env.NODE_ENV)
-
-// layout
-// view组件是用在多层嵌套但依然想渲染在主页面的page视图下的场景
-const view = () => import('@/layout/view')
-
 Vue.use(Router)
 
-/*
-* @params
-* icon: ''                      菜单图标（可以用element-ui的icon & iconfont）
-* open: false                   是否展开菜单
-* @meta
-* login: false                  是否需要登录
-* role: 'admin' || ['admin']    是否需要权限
-* keep: false                   是否需要缓存
-*/
+const _import = require('./_import_' + process.env.NODE_ENV)
+/* Layout */
+const view = () => import('@/views/layout/view')
+
 export const routes = [
     {
         path: '/',
@@ -28,7 +17,7 @@ export const routes = [
         path: '/index',
         redirect: 'index/home',
         meta: { login: true },
-        component: _import('index'),
+        component: _import('layout/index'),
         children: [
             {
                 name: '营销',
@@ -80,7 +69,7 @@ export const routes = [
             },
             {
                 name: '表单',
-                path: 'form',
+                path: 'electric',
                 icon: 'i-icon-edit',
                 component: _import('example/form')
             },
@@ -95,18 +84,20 @@ export const routes = [
         name: 'login',
         path: '/login',
         component: _import('login/index')
+    },
+    { 
+        path: '/404', 
+        component: _import('404/404')
+    },
+    { 
+        path: '*', 
+        redirect: '/404'
     }
 ]
 
 export default new Router({
-    mode: 'history',
-    routes: routes,
-    scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
-            to.meta.position = savedPosition
-            return savedPosition
-        } else {
-            return { x: 0, y: 0 }
-        }
-    }
+    mode: 'history', //后端支持可开
+    scrollBehavior: () => ({ y: 0 }),
+    routes: routes
 })
+

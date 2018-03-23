@@ -1,5 +1,5 @@
 <template>
-    <el-dialog id="errorDialog" title="错误日志" :visible.sync="visible" width="80%">
+    <el-dialog title="错误日志" :visible.sync="visible" width="80%">
         <el-table :data="$store.state.logs" border :header-cell-style="{'text-align': 'center'}">
             <el-table-column label="序号" align="center" width="50">
                 <template slot-scope="scope">

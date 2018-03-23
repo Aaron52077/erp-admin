@@ -12,20 +12,20 @@ import VueProgressBar from 'vue-progressbar'
 import vueClipboard from 'vue-clipboard-pack'
 // css
 import 'element-ui/lib/theme-chalk/index.css'
+import './assets/css/index.less'
 import './assets/css/reset.css'
-import './assets/css/golbal.css'
 import './assets/fonts/iconfont.css'
 
 // mock数据 伪数据
 import './mock'
 
 // 自定义公共组件
-import breadcrumb from '@/components/breadcrumb'
-import sticky from '@/components/sticky'
-import backTop from '@/components/backTop'
-import countTo from '@/components/countTo'
-import loading from '@/components/loading'
-import menuItem from '@/layout/menuItem'
+import breadcrumb from '@/components/Breadcrumb'
+import sticky from '@/components/Sticky'
+import backTop from '@/components/BackToTop'
+import countTo from '@/components/CountTo'
+import loading from '@/components/Loading'
+import menuItem from '@/views/layout/menuItem'
 
 // 自定义组件
 Vue.component('i-breadcrumb', breadcrumb)

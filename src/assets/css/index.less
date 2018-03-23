@@ -1,0 +1,45 @@
+@import './var.less';
+@import './mixins.less';
+@import './golbal.less';
+#app {
+  // 主体区域
+  .main-container {
+    min-height: 100%;
+    transition: margin-left 0.28s;
+    margin-left: 302px;
+    padding: 0;
+  } // 侧边栏
+  .sidebar-container {
+    transition: width 0.28s;
+    width: 302px!important;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    .el-menu {
+      border-right: none;
+    }
+    .el-tabs__header.is-left {
+        margin-right: 0;
+        padding-bottom: 60px;
+    }
+    .el-menu-item {
+        -webkit-transition: border-color .3s,background-color .3s,color .3s, -webkit-box-shadow .2s;
+        transition: box-shadow .2s, border-color .3s,background-color .3s,color .3s;
+        &:hover {
+          background-color: #fff;
+          box-shadow: 0 0 8px 2px #eee;
+        }
+    }
+  }
+  .hideSidebar {
+    .sidebar-container {
+      width: 70px!important;
+    }
+    .main-container {
+      margin-left: 70px;
+    }
+  }
+}

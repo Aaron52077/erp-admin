@@ -1,12 +1,14 @@
 <template>
-	<el-main id="page">
+	<el-main class="main-container">
         <!-- 面包屑组件 -->
         <i-breadcrumb class="breadcrumb" separator="/"></i-breadcrumb>
-        <div class="page-panel">
+        <section class="page-panel" style="min-height: 100%">
             <transition name="el-fade-in-linear" mode="out-in">
-                <router-view></router-view>
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
             </transition>
-        </div>
+        </section>
         <!-- top -->
         <i-back-top></i-back-top> 
     </el-main>
@@ -16,11 +18,4 @@ export default {
     name: 'page'
 }
 </script>
-<style lang='less'>
-#page {
-    position: relative;
-    height: fit-content;
-    min-height: 100%;
-    padding: 0;
-}
-</style>
+

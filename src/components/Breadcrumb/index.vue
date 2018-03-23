@@ -1,5 +1,8 @@
 <template>
     <div>
+        <el-tooltip class="item" effect="dark" content="收起" placement="top-end">
+            <hamburger class="hamburger-container" :toggleClick="toggleSideBar"></hamburger>
+        </el-tooltip>
         <!-- 自定义分隔符 -->
         <el-breadcrumb v-if="separator" :separator="separator">
             <el-breadcrumb-item v-for="(item,index) in json" :key="index" :to="item.path">{{item.name}}</el-breadcrumb-item>
@@ -16,6 +19,8 @@
 * separator       自定义分隔符
 * separatorClass  自定义分隔符图标
 */
+import { mapGetters } from 'vuex'
+import Hamburger from '@/components/Hamburger'
 export default {
     name: 'breadcrumb',
     props: {
@@ -46,11 +51,42 @@ export default {
                 matched = [{ name: '首页', path: '/index' }].concat(matched)
             }
             this.json = matched
+        },
+        toggleSideBar() {
+            this.$store.dispatch('ToggleSideBar')
         }
     },
     mounted() {
         this.getBreadcrumb()
+    },
+    computed: {
+        ...mapGetters([
+            'sidebar'
+        ])
+    },
+    components: {
+        Hamburger
     }
 }
 </script>
+
+<style scoped>
+/* 面包屑导航 */
+.breadcrumb {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    padding-left: 20px;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+.breadcrumb .el-breadcrumb {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+</style>
+
 

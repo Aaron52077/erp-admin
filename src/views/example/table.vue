@@ -179,7 +179,7 @@
 </template>
 <script>
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/table'
-import waves from '@/components/waves' // 水波纹指令
+import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
 
 const typeOptions = [
@@ -420,7 +420,7 @@ export default {
         },
         handleDownload() {
             this.downloadLoading = true
-            import('@/components/vendor/Export2Excel').then(excel => {
+            import('@/components/ExportExcel/Export2Excel').then(excel => {
                 const tHeader = ['客户来源', '客户级别', '客户需求', '楼盘信息', '联系电话', '市场接待', '时间']
                 const filterVal = ['type', 'status', 'title', 'addr', 'moblie', 'name', 'timestamp']
                 const data = this.formatJson(filterVal, this.formJson)
