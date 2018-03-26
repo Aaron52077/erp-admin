@@ -1,8 +1,6 @@
 <template>
     <div>
-        <el-tooltip class="item" effect="dark" content="收起" placement="top-end">
-            <hamburger class="hamburger-container" :toggleClick="toggleSideBar"></hamburger>
-        </el-tooltip>
+        <hamburger class="hamburger-container" :toggleClick="toggleSideBar"></hamburger>
         <!-- 自定义分隔符 -->
         <el-breadcrumb v-if="separator" :separator="separator">
             <el-breadcrumb-item v-for="(item,index) in json" :key="index" :to="item.path">{{item.name}}</el-breadcrumb-item>

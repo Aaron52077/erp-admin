@@ -10,7 +10,7 @@ const state = {
     logs: [],               // 错误日志
     theme: '#42B983',        // 主题颜色
     sidebar: {
-        opened: !+cache.setSession('sidebarStatus')
+        opened: true
     }
 }
 
@@ -39,11 +39,6 @@ const mutations = {
         state.theme = val
     },
     toggle_sidebar: state => {
-        if (state.sidebar.opened) {
-            cache.setSession('sidebarStatus', 1)
-        } else {
-            cache.setSession('sidebarStatus', 0)
-        }
         state.sidebar.opened = !state.sidebar.opened
     }
 }

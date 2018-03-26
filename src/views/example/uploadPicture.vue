@@ -10,32 +10,6 @@
                     <img width="100%" :src="preViewURL">
                 </el-dialog>
             </el-tab-pane>
-            <!-- 免费图片 -->
-            <el-tab-pane label="免费图片" name="select" class="select">
-                <el-input class="imgInput" placeholder="请输入关键字" v-model="keyWord" @keyup.native.enter="get_picture">
-                    <el-button slot="append" @click.stop="get_picture">搜索</el-button>
-                </el-input>
-                <div class="imgWrapper">
-                    <i-loading :visible="loading" :reload="get_picture"></i-loading>
-                    <div class="nothing" v-if="freePictureList && !(freePictureList.length > 0) && !loading">
-                        <p>还没有图片，搜索一下吧~</p>
-                    </div>
-                    <el-checkbox-group class="img-list" v-model="selectFileList" :max="5">
-                        <div class="img-item" v-for="(item,index) in freePictureList">
-                            <el-tooltip placement="right-end" effect="light" :enterable="false">
-                                <el-checkbox-button :label="item.picurl"><img :src="item.picurl"></el-checkbox-button>
-                                <!-- hover出现的内容 -->
-                                <img class="tooltipImg" slot="content" :src="item.picurl">
-                            </el-tooltip>
-                        </div>
-                    </el-checkbox-group>
-                    <template v-if="freePictureList && freePictureList.length > 0">
-                        <i-loading :visible="more_loading" :reload="get_picture_more">
-                            <div slot="nothing">没有更多数据了</div>
-                        </i-loading>
-                    </template>
-                </div>
-            </el-tab-pane>
         </el-tabs>
         <!-- footer -->
         <div slot="footer">

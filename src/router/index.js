@@ -23,7 +23,7 @@ export const routes = [
                 name: '营销',
                 path: 'home',
                 icon: 'i-icon-formdata',
-                component: _import('index/index'),
+                component: _import('home/index'),
                 children: [
                     {
                         name: 'CRM',
@@ -32,29 +32,29 @@ export const routes = [
                         children: [
                             {
                                 name: '客户管理',
-                                path: 'sticky',
+                                path: 'a',
                                 icon: 'i-icon-table',
                             },
                             {
                                 name: '统计分析',
-                                path: 'sticky',
+                                path: 'b',
                                 icon: 'i-icon-echart',
                             }
                         ]
                     },
                     {
                         name: '网销神器',
-                        path: 'breadcrumb',
+                        path: 'plugins',
                         icon: 'i-icon-product',
                         children: [
                             {
                                 name: '公司介绍',
-                                path: 'sticky',
+                                path: 'a',
                                 icon: 'i-icon-home',
                             },
                             {
                                 name: '设计团队',
-                                path: 'sticky',
+                                path: 'b',
                                 icon: 'i-icon-peoples',
                             }
                         ]
@@ -83,7 +83,7 @@ export const routes = [
     {
         name: 'login',
         path: '/login',
-        component: _import('login/index')
+        component: _import('Fc/index')
     },
     { 
         path: '/404', 

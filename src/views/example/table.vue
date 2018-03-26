@@ -41,7 +41,6 @@
         <!-- 表格 v-loading="loading" element-loading-text="给我一点时间"  -->
         <el-table :key='tableKey' 
                 :data="formJson"
-                height="650"
                 border fit highlight-current-row>
             <el-table-column align="center" label="客户来源" width="100">
                 <template slot-scope="scope">

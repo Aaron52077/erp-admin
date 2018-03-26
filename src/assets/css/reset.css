@@ -36,9 +36,11 @@ body {
   border-radius: 3px;
 }
 html {
+    height: 100%;
     line-height: 1.15;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    background-color: #eee;
   }
   body {
     margin: 0;

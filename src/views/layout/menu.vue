@@ -8,8 +8,8 @@
             </router-link>
             <!-- 侧边导航 -->
             <!-- @tab-click="toggleSideBar" -->
-            <el-tabs class="el-tabs-container" tab-position="left">    
-                <el-tab-pane label="营销">
+            <el-tabs class="el-tabs-container" v-model="tabsVal" tab-position="left" @tab-click="hasSidebar(tabsVal)">    
+                <el-tab-pane label="营销" name="营销">
                     <span slot="label" class="icon-navbar"><i class="i-icon-formdata"></i> 营销</span>
                     <div class="tabs-hd">
                         <h3>营销</h3>
@@ -21,10 +21,10 @@
                         </el-input>    
                     </div> 
                     <el-menu :default-active="$route.name" :default-openeds="defaultOpeneds">
-                        <i-menuitem :json="filterRoutes"></i-menuitem>
+                        <i-menuitem :json="outputRouter"></i-menuitem>
                     </el-menu> 
                 </el-tab-pane>
-                <el-tab-pane label="客户">
+                <el-tab-pane label="客户" name="客户">
                     <span slot="label" class="icon-navbar"><i class="i-icon-peoples"></i> 客户</span>
                     <div class="tabs-hd">
                         <h3>客户</h3>
@@ -35,8 +35,11 @@
                             v-model="input21">
                         </el-input>  
                     </div>
+                    <el-menu :default-active="$route.name" :default-openeds="defaultOpeneds">
+                        <i-menuitem :json="outputRouter"></i-menuitem>
+                    </el-menu> 
                 </el-tab-pane>
-                <el-tab-pane label="设计">
+                <el-tab-pane label="设计" name="设计">
                     <span slot="label" class="icon-navbar"><i class="i-icon-edit"></i> 设计</span>
                     <div class="tabs-hd">
                         <h3>设计</h3>
@@ -48,7 +51,7 @@
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="合同">
+                <el-tab-pane label="合同" name="合同">
                     <span slot="label" class="icon-navbar"><i class="i-icon-contract"></i> 合同</span>
                     <div class="tabs-hd">
                         <h3>合同</h3>
@@ -60,7 +63,7 @@
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="工程">
+                <el-tab-pane label="工程" name="工程">
                     <span slot="label" class="icon-navbar"><i class="i-icon-team"></i> 工程</span>
                     <div class="tabs-hd">
                         <h3>工程</h3>
@@ -72,7 +75,7 @@
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="材料">
+                <el-tab-pane label="材料" name="材料">
                     <span slot="label" class="icon-navbar"><i class="i-icon-info"></i> 材料</span>
                     <div class="tabs-hd">
                         <h3>材料</h3>
@@ -84,7 +87,7 @@
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="成控">
+                <el-tab-pane label="成控" name="成控">
                     <span slot="label" class="icon-navbar"><i class="i-icon-xiadan"></i> 成控</span>
                     <div class="tabs-hd">
                         <h3>成控</h3>
@@ -96,7 +99,7 @@
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="报表">
+                <el-tab-pane label="报表" name="报表">
                     <span slot="label" class="icon-navbar"><i class="i-icon-echart"></i> 报表</span>
                     <div class="tabs-hd">
                         <h3>报表</h3>
@@ -108,7 +111,7 @@
                         </el-input>  
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="设置">
+                <el-tab-pane label="设置" name="设置">
                     <span slot="label" class="icon-navbar"><i class="i-icon-edits"></i> 设置</span>
                     <div class="tabs-hd">
                         <h3>设置</h3>
@@ -169,7 +172,7 @@
                         <el-menu-item index="5">
                             <span slot="title">工作日报</span>
                         </el-menu-item>
-                        <el-menu-item index="6" @click.native="tips">
+                        <el-menu-item index="6" @click.native="hanldeTips">
                             <span slot="title">退出登录</span>
                         </el-menu-item>
                     </el-menu>
@@ -205,26 +208,35 @@ export default {
         return {
             filterRoutes: [],       // 过滤后的路由
             defaultOpeneds: [],     // 默认打开的二级菜单
+            tipsVisible: false,     // 用户相关操作信息
             input21: '',
-            tipsVisible: false
+            tabsVal: '营销',        // 默认第一个选项卡的 name
+            outputRouter: []
         }
     },
     computed: {
         ...mapState([
-            'user',
-            'logs'
+            'user'
         ])
     },
     methods: {
+        // 判断权限
+        hasPermission(roles, route) {
+            if (route.meta && route.meta.roles) {
+                return roles.some(role => route.meta.roles.indexOf(role) >= 0)
+            } else {
+                return true
+            }
+        },
         // 过滤路由
-        handleRoutes(Arr) {
+        handleRoutes(Arr, roles) {
             const Routes = Arr.filter(route => {
-                if (route.name) {
+                if (this.hasPermission(roles, route)) {
                     if (route.open) {
                         this.defaultOpeneds.push(route.meta)
                     }
-                    if (route.children) {
-                        route.children = this.handleRoutes(route.children)
+                    if (route.children && route.children.length) {
+                        route.children = this.handleRoutes(route.children, roles)
                     }
                     return true
                 } else {
@@ -236,12 +248,12 @@ export default {
         // 过滤出index路由
         handleIndexRoutes() {
             let filterRoutes = this.handleRoutes(routes)
-            let indexRoutes = filterRoutes.filter(route => route.name === '首页')[0]
+            let indexRoutes = filterRoutes.filter(route => route.name === "首页")[0]
             if (indexRoutes.children) {
                 this.filterRoutes = indexRoutes.children
             }
         },
-        tips() { 
+        hanldeTips() { 
             this.tipsVisible = true     
         },
         // 退出登录 exit
@@ -250,16 +262,17 @@ export default {
             this.$store.commit('loginOut')
             this.$router.push('/login')  
         },
-        handleClose(done) {
-            this.$confirm('确认关闭？')
-            .then(_ => {
-                done();
-            })
-            .catch(_ => {});
+        hasSidebar(type) {
+            this.$store.state.sidebar.opened = true
+            let outputRoute = this.filterRoutes
+            if (outputRoute) {
+                this.outputRouter = outputRoute.filter(route => route.name === type)
+            }  
         }
     },
     created() {
         this.handleIndexRoutes()
+        this.hasSidebar("营销")
     },
     components: { ScrollBar }
 }
@@ -355,6 +368,7 @@ export default {
     height: 60px;
     width: 70px;
     padding-left: 15px;
+    background-color: #22d7bb;
     &-info{
         img{
             width: 40px;

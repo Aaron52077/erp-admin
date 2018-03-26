@@ -37,40 +37,39 @@
             </el-form-item>
         </el-form>
         <div class="wrapper">
-
-         
-                <!-- 正文 -->
-                <div class="content">
-                    <quill-editor v-model.trim="content" ref="myQuillEditor" :options="editorOption">
-                        <!-- slot方式 -->
-                        <div id="toolbar" slot="toolbar">
-                            <div class="ql-formats">
-                                <button class="ql-header" value="1" title="H1标题"></button>
-                                <button class="ql-bold" title="加粗"></button>
-                                <button class="ql-italic" title="斜体"></button>
-                                <button class="ql-underline" title="下划线"></button>
-                                <button class="ql-strike" title="删除线"></button>
-                                <button class="ql-blockquote" title="引用"></button>
-                                <button class="ql-list" value='ordered' title="有序列表"></button>
-                                <button class="ql-list" value="bullet" title="无序列表"></button>
-                            </div>
-                            <div class='ql-formats'>
-                                <!-- 自定义上传图片按钮 -->
-                                <el-button icon="el-icon-picture" title="插入图片" style="font-size: 16px;" @click.stop="uploadPictureVisible = true"></el-button>
-                                <button class="ql-link" title="文章链接"></button>
-                                <button class="ql-video" title="插入视频"></button>
-                            </div>
-                            <div class="ql-formats">
-                                <button class="ql-clean" title="清除格式"></button>
-                                <!-- 自定义撤销和重做 -->
-                                <button class="undo" title="撤销" @click.stop="editor.history.undo()"><i class="el-icon-my-undo"></i></button>
-                                <button class="redo" title="重做" @click.stop="editor.history.redo()"><i class="el-icon-my-redo"></i></button>
-                            </div>
-                            <!-- 自定义保存状态 -->
-                            <div class="draftSave" :class="{on : isSave}"></div>
+            <!-- 正文 -->
+            <div class="content">
+                <quill-editor v-model.trim="content" ref="myQuillEditor" :options="editorOption">
+                    <!-- slot方式 -->
+                    <div id="toolbar" slot="toolbar">
+                        <div class="ql-formats">
+                            <button class="ql-header" value="1" title="H1标题"></button>
+                            <button class="ql-bold" title="加粗"></button>
+                            <button class="ql-italic" title="斜体"></button>
+                            <button class="ql-underline" title="下划线"></button>
+                            <button class="ql-strike" title="删除线"></button>
+                            <button class="ql-blockquote" title="引用"></button>
+                            <button class="ql-list" value='ordered' title="有序列表"></button>
+                            <button class="ql-list" value="bullet" title="无序列表"></button>
                         </div>
-                    </quill-editor>
-                </div>
+                        <div class="ql-formats">
+                            <!-- 自定义上传图片按钮 -->
+                            <el-button icon="el-icon-picture" title="插入图片" style="font-size: 16px;" @click.stop="uploadPictureVisible = true"></el-button>
+                        </div>
+                        <div class="ql-formats">
+                            <button class="ql-clean" title="清除格式"></button>
+                            <!-- 自定义撤销和重做 -->
+                            <button class="undo" title="撤销" @click.stop="editor.history.undo()"><i class="el-icon-my-undo"></i></button>
+                            <button class="redo" title="重做" @click.stop="editor.history.redo()"><i class="el-icon-my-redo"></i></button>
+                        </div>
+                        <!-- 自定义保存状态 -->
+                        <div class="draftSave" :class="{on : isSave}"></div>
+                    </div>
+                </quill-editor>
+
+                <!-- 自定义上传图片 -->
+                <upload-picture  v-if="uploadPictureVisible" @complete="inserPicture" @close="uploadPictureVisible = false"></upload-picture>
+            </div>
         </div>
     </div>
 </template>
@@ -300,7 +299,7 @@ export default {
 <style lang='less'>
 #upload {
     position: relative;
-    padding: 10px 10px 0 10px;
+    padding: 10px;
     background-color: #fff;
     .wrapper{
         width: 100%;
