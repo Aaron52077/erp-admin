@@ -12,8 +12,8 @@
 </div>
 </template>
 <script>
-import iMenu from '@/views/layout/menu'
-import iPage from '@/views/layout/page'
+import iMenu from './menu'
+import iPage from './page'
 export default {
     name: 'index',
     components: { iMenu, iPage },

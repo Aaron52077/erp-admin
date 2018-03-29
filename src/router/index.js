@@ -16,29 +16,32 @@ export const routes = [
         name: '首页',
         path: '/index',
         redirect: 'index/home',
-        meta: { login: true },
+        meta: { login: true, role: '0' },
         component: _import('layout/index'),
         children: [
             {
                 name: '营销',
                 path: 'home',
                 icon: 'i-icon-formdata',
-                component: _import('home/index'),
+                component: view,
                 children: [
                     {
                         name: 'CRM',
                         path: 'crm',
                         icon: 'i-icon-dashboard',
+                        component: view,
                         children: [
                             {
                                 name: '客户管理',
                                 path: 'a',
                                 icon: 'i-icon-table',
+                                component: _import('example/index')
                             },
                             {
                                 name: '统计分析',
                                 path: 'b',
                                 icon: 'i-icon-echart',
+                                component: _import('home/index'),
                             }
                         ]
                     },
@@ -46,16 +49,19 @@ export const routes = [
                         name: '网销神器',
                         path: 'plugins',
                         icon: 'i-icon-product',
+                        component: view,
                         children: [
                             {
                                 name: '公司介绍',
                                 path: 'a',
                                 icon: 'i-icon-home',
+                                component: _import('example/index')
                             },
                             {
                                 name: '设计团队',
                                 path: 'b',
                                 icon: 'i-icon-peoples',
+                                component: _import('example/form')
                             }
                         ]
                     }

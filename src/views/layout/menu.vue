@@ -259,7 +259,7 @@ export default {
         // 退出登录 exit
         onUserSelected() {
             this.tipsVisible = false
-            this.$store.commit('loginOut')
+            this.$store.commit('login_out')
             this.$router.push('/login')  
         },
         hasSidebar(type) {

@@ -1,76 +1,77 @@
 <template>
     <div id="upload">
         <h3>表单编辑</h3>
-        <el-form ref="form" :model="formData" label-width="120px" style="width:600px;">
+        <el-form ref="form" :model="formData" label-width="120px" :style="widths">
             <el-form-item label="客户姓名">
-                <el-input class="i-input" size="small" v-model="formData.input1" placeholder="客户姓名"></el-input>
+                <el-input class="i-input" v-model="formData.input1" placeholder="客户姓名"></el-input>
             </el-form-item>
             <el-form-item label="客户级别">
-                <el-select v-model="formData.input2" size="small" placeholder="客户级别">
+                <el-select v-model="formData.input2" placeholder="客户级别">
                     <el-option label="中意向" value="1"></el-option>
                     <el-option label="高意向" value="2"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="活动时间">
-                <el-form-item prop="date1">
-                    <el-date-picker size="small" type="date" class="i-input" placeholder="选择日期" v-model="formData.date1"></el-date-picker>
-                </el-form-item>
+                <el-date-picker type="datetime" class="i-input" placeholder="选择日期" v-model="formData.date"></el-date-picker>
             </el-form-item>
              <el-form-item label="客户来源">
-                <el-checkbox-group v-model="formData.type" size="small">
+                <el-checkbox-group v-model="formData.type">
                     <el-checkbox-button label="自主开发" name="type"></el-checkbox-button>
                     <el-checkbox-button label="自然到店" name="type"></el-checkbox-button>
                     <el-checkbox-button label="蜂巢网" name="type"></el-checkbox-button>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item label="房屋类型" prop="resource">
-                <el-radio-group v-model="formData.resource" size="small">
+            <el-form-item label="房屋类型">
+                <el-radio-group v-model="formData.resource1">
                     <el-radio label="期房"></el-radio>
                     <el-radio label="现房"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="客户是否见面" prop="resource">
-                <el-radio-group v-model="formData.resource" size="small">
+            <el-form-item label="客户是否见面">
+                <el-radio-group v-model="formData.resource2">
                     <el-radio label="是"></el-radio>
                     <el-radio label="否"></el-radio>
                 </el-radio-group>
             </el-form-item>
+            <!-- 文本编辑器 -->
+            <el-form-item label="客户需求">
+                <!-- 正文 -->
+                <div class="content">
+                    <quill-editor v-model.trim="formData.content" ref="myQuillEditor" :options="editorOption">
+                        <!-- slot方式 -->
+                        <div id="toolbar" slot="toolbar">
+                            <div class="ql-formats">
+                                <button class="ql-header" value="1" title="H1标题"></button>
+                                <button class="ql-bold" title="加粗"></button>
+                                <button class="ql-italic" title="斜体"></button>
+                                <button class="ql-underline" title="下划线"></button>
+                                <button class="ql-strike" title="删除线"></button>
+                                <button class="ql-blockquote" title="引用"></button>
+                                <button class="ql-list" value='ordered' title="有序列表"></button>
+                                <button class="ql-list" value="bullet" title="无序列表"></button>
+                            </div>
+                            <div class="ql-formats">
+                                <!-- 自定义上传图片按钮 -->
+                                <el-button icon="el-icon-picture" title="插入图片" style="font-size: 16px;" @click.stop="uploadPictureVisible = true"></el-button>
+                            </div>
+                            <div class="ql-formats">
+                                <button class="ql-clean" title="清除格式"></button>
+                                <!-- 自定义撤销和重做 -->
+                                <button class="undo" title="撤销" @click.stop="editor.history.undo()"><i class="el-icon-refresh"></i></button>
+                                <button class="redo" title="重做" @click.stop="editor.history.redo()"><i class="el-icon-refresh"></i></button>
+                            </div>                   
+                        </div>
+                    </quill-editor>
+                    <!-- 自定义上传图片 -->
+                    <upload-picture  v-if="uploadPictureVisible" @complete="inserPicture" @close="uploadPictureVisible = false"></upload-picture>
+                </div>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('form')">保存</el-button>
+                <el-button @click="resetForm('form')">重置</el-button>
+                <el-button @click="$router.back(-1)">返回上一页</el-button>
+            </el-form-item>
         </el-form>
-        <div class="wrapper">
-            <!-- 正文 -->
-            <div class="content">
-                <quill-editor v-model.trim="content" ref="myQuillEditor" :options="editorOption">
-                    <!-- slot方式 -->
-                    <div id="toolbar" slot="toolbar">
-                        <div class="ql-formats">
-                            <button class="ql-header" value="1" title="H1标题"></button>
-                            <button class="ql-bold" title="加粗"></button>
-                            <button class="ql-italic" title="斜体"></button>
-                            <button class="ql-underline" title="下划线"></button>
-                            <button class="ql-strike" title="删除线"></button>
-                            <button class="ql-blockquote" title="引用"></button>
-                            <button class="ql-list" value='ordered' title="有序列表"></button>
-                            <button class="ql-list" value="bullet" title="无序列表"></button>
-                        </div>
-                        <div class="ql-formats">
-                            <!-- 自定义上传图片按钮 -->
-                            <el-button icon="el-icon-picture" title="插入图片" style="font-size: 16px;" @click.stop="uploadPictureVisible = true"></el-button>
-                        </div>
-                        <div class="ql-formats">
-                            <button class="ql-clean" title="清除格式"></button>
-                            <!-- 自定义撤销和重做 -->
-                            <button class="undo" title="撤销" @click.stop="editor.history.undo()"><i class="el-icon-my-undo"></i></button>
-                            <button class="redo" title="重做" @click.stop="editor.history.redo()"><i class="el-icon-my-redo"></i></button>
-                        </div>
-                        <!-- 自定义保存状态 -->
-                        <div class="draftSave" :class="{on : isSave}"></div>
-                    </div>
-                </quill-editor>
-
-                <!-- 自定义上传图片 -->
-                <upload-picture  v-if="uploadPictureVisible" @complete="inserPicture" @close="uploadPictureVisible = false"></upload-picture>
-            </div>
-        </div>
     </div>
 </template>
 <script>
@@ -79,21 +80,20 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.snow.css'
 import cache from '@/utils/cache.js'
 import uploadPicture from './uploadPicture'
-import selectPicture from './selectPicture'
-import previewArticle from './preview'
 Vue.use(VueQuillEditor)
 export default {
     name: 'upload',
-    components: { uploadPicture, selectPicture, previewArticle },
+    components: { uploadPicture },
     data() {
         return {
             formData: {
-                input1: '',
-                input2: '',
-                data1: '',
-                data2: '',
+                input1: null,
+                input2: null,
+                date: null,
                 type: [],
-                resource: ''
+                resource1: null,
+                resource2: null,
+                content: null                            // 正文
             },
             editorOption: {
                 theme: 'snow',
@@ -105,39 +105,24 @@ export default {
                         userOnly: true
                     }
                 },
-                placeholder: ' '
+                placeholder: ''
             },
-            draft: false,                           // 草稿toggle
-            isSave: false,                          // 保存toggle
             isChange: false,                        // 内容是否发生改变
-            title: '',                              // 标题
-            content: '',                            // 正文
-            uploadPictureVisible: false,            // 自定义图片上传dialog的toggle
-            selectPictureVisible: false,            // 选择封面图dialog的toggle
-            previewVisible: false,                  // 预览文章dialog的tiggle
-            cover_mode: 1,                          // 封面模式：单图 / 三图
-            contentImages: [],                      // 正文里的图片
-            clickIndex: '',                         // 选中的封面图片index
-            coverImages: [],                        // 选择完成的封面图片
-            previewJson: {}                         // 预览数据
+            uploadPictureVisible: false,             // 自定义图片上传dialog的toggle
+            width: ''
         }
     },
     computed: {
         editor() {
             return this.$refs.myQuillEditor.quill
         },
-        article(val) {
-            return this.title + this.content
+        widths() {
+            return {
+                width: `${this.width}px`
+            }
         }
     },
     watch: {
-        article(val) {
-            this.isChange = true
-            if (this.draft) {
-                this.isChange = false
-            }
-            this.handleDraft('set')
-        },
         ischange(val) {
             if (val) {
                 window.addEventListener('beforeunload', this.listenFreshClose)
@@ -145,57 +130,6 @@ export default {
         }
     },
     methods: {
-        // 处理草稿
-        handleDraft(type) {
-            if (type === 'get') {
-                let draft = JSON.parse(cache.getLocal('draft'))
-                if (draft && (draft.title || draft.content)) {
-                    this.draft = true
-                    this.title = draft.title
-                    this.content = draft.content
-                }
-            } else if (type === 'set') {
-                let data = {
-                    time: new Date(),
-                    title: this.title,
-                    content: this.content
-                }
-                cache.setLocal('draft', data)
-                this.isSave = true
-                let timer = setTimeout(() => {
-                    this.isSave = false
-                    clearTimeout(timer)
-                }, 1500)
-            } else if (type === 'remove') {
-                cache.removeLocal('draft')
-                this.draft = false
-                this.title = this.content = ''
-            }
-        },
-        // 查找正文全部图片
-        openSelectPicture(index) {
-            let allImg = []
-            this.clickIndex = index
-            this.editor.container.querySelectorAll('img').forEach(item => {
-                allImg.push(item.src)
-            })
-            this.contentImages = allImg
-            this.selectPictureVisible = true
-        },
-        openPreview() {
-            if (this.onlyTitleRule()) {
-                this.previewJson = {
-                    title: this.title,
-                    content: this.content,
-                    cover_mode: this.cover_mode,
-                    coverImages: this.coverImages,
-                    createdTime: new Date()
-                }
-                this.previewVisible = true
-            }
-            // console.log(JSON.stringify(this.previewJson))
-        },
-        // 插入图片
         inserPicture(files) {
             this.editor.focus()
             files.forEach((item, index) => {
@@ -206,77 +140,25 @@ export default {
             // 设置光标为末尾
             this.editor.setSelection(this.editor.getSelection().index + 1)
         },
-        // 插入封面图
-        inserCover(val) {
-            if (val) {
-                this.coverImages[this.clickIndex] = val
-            }
-        },
-        // 验证
-        verify(type) {
-            if (type === 'publish') {
-                if (this.allRule()) {
-                    this.$confirm('确定发表文章？', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        cache.removeLocal('draft')
-                        this.$notify.success('发表成功')
-                    }).catch(() => {
-                        console.log('cancle')
-                    })
-                }
-            } else if (type === 'draft') {
-                if (this.onlyTitleRule()) {
-                    this.$notify.success('已存为草稿')
-                }
-            }
-        },
-        // 所有规则
-        allRule() {
-            if (!this.title) {
-                this.$message.error('标题不能为空')
-            } else if (this.title.length < 5) {
-                this.$message.error('标题长度不能低于5个字')
-            } else if (this.title.length > 30) {
-                this.$message.error('标题长度不能超过30个字')
-            } else if (!this.content) {
-                this.$message.error('正文不能为空')
-            } else if (!this.coverImages.length > 0) {
-                this.$message.error('封面图片不能为空')
-            } else if (this.cover_mode === 3 && this.coverImages.length < 3) {
-                this.$message.error('封面图片不能少于3张')
-            } else {
-                return true
-            }
-        },
-        // 标题规则
-        onlyTitleRule() {
-            if (!this.title) {
-                this.$message.error('标题不能为空')
-            } else if (this.title.length < 5) {
-                this.$message.error('标题长度不能低于5个字')
-            } else if (this.title.length > 30) {
-                this.$message.error('标题长度不能超过30个字')
-            } else {
-                return true
-            }
-        },
         // 监听刷新和关闭窗口
         listenFreshClose(e) {
             e.returnValue = '您将离开页面，可能会丢失正在编辑的内容'
+        },
+        // 表单提交
+        submitForm(formName) {
+            console.log(this.formData)
+        },
+        // 表单重置
+        resetForm(formName) {
+            this.$refs[formName].resetFields()
         }
-    },
-    mounted() {
-        this.handleDraft('get')
     },
     beforeDestroy() {
         window.removeEventListener('beforeunload', this.listenFreshClose)
     },
     // 离开路由钩子
     beforeRouteLeave (to, from, next) {
-        if (this.isChange && (this.title || this.content)) {
+        if (this.isChange && (this.title || this.formData.content)) {
             this.$confirm('要离开本页面吗？系统将可能不会保存你做的更改', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -293,6 +175,9 @@ export default {
             next()
             window.removeEventListener('beforeunload', this.listenFreshClose)
         }
+    },
+    mounted() {
+        this.width = this.$el.getBoundingClientRect().width - 120
     }
 }
 </script>
@@ -301,223 +186,53 @@ export default {
     position: relative;
     padding: 10px;
     background-color: #fff;
-    .wrapper{
-        width: 100%;
-        .recovery{
-            background: rgba(254,133,0,0.95);
-            font-size: 14px;
-            color: #fff;
-            margin-bottom: 10px;
-            animation: slideDown 5s ease;
-            height: 0px;
-            line-height: 40px;
-            padding: 0 15px;
-            overflow: hidden;
-            .cancle{
-                color: #4d7dd2;
-                margin-left: 8px;
+    .content {
+        position: relative;
+        border: 1px solid #e9e9e9;
+        .quill-editor {
+            .ql-toolbar.ql-snow {
+                border: none;
+                background: #eee;
             }
-        }
-        .writer {
-            position: relative;
-            border: 1px solid #e9e9e9;
-            .title {
-                position: relative;
-                width: 100%;
-                height: 58px;
-                line-height: 58px;
-                input {
-                    width: 100%;
-                    height: 100%;
-                    border: none;
-                    outline: none;
-                    color: #595959;
-                    font-size: 20px;
-                    padding-left: 20px;
-                    padding-right: 80px;
-                    font-weight: 700;
-                }
-                .title-count {
-                    position: absolute;
-                    width: 80px;
-                    height: 100%;
-                    top: 0;
-                    right: 0;
-                    color: #999;
-                    font-size: 14px;
-                    padding: 0 10px;
-                    text-align: right;
-                    &.error {
-                        color: #ff4949;
-                    }
-                }
-            }
-            .content {
-                .quill-editor {
-                    .ql-toolbar.ql-snow {
-                        border: none;
-                        background: #eee;
-                    }
-                    .ql-toolbar {
-                        border-bottom: 1px solid #e9e9e9 !important;
-                        .undo, .redo {
-                            color: #555;
-                            &:hover{
-                                color: #06c;
-                            }
-                            i{
-                                color: inherit;
-                            }
-                        }
-                    }
-                    .ql-container {
-                        height: 600px;
-                        font-size: 16px;
-                        color: #5D5D5D;
-                        border: none;
-                    }
-                    .ql-formats {
-                        padding-right: 20px;
-                        border-right: 1px solid #D8D8D8;
-                        button {
-                            width: 30px;
-                            height: 26px;
-                            outline: none;
-                            &:hover{
-                                color: #06c;
-                            }
-                            i{
-                                font-size: 17px;
-                                color: #555;
-                            }
-                        }
-                        .el-picture{
-                            font-size: 20px;
-                        }
-                    }
-                    h1 {
-                        position: relative;
-                        font-size: 18px;
-                        line-height: 24px;
-                        font-weight: 700;
-                        padding-left: 12px;
-                        &:after {
-                            content: "";
-                            width: 4px;
-                            height: 18px;
-                            background: #f85959;
-                            top: 3px;
-                            position: absolute;
-                            left: 0;
-                        }
-                    }
-                    img {
-                        display: block;
-                        margin: 0 auto;
-                        margin-bottom: 1em;
-                    }
-                }
-                .draftSave{
-                    float: right;
-                    margin-top: 9px;
-                    font-size: 13px;
-                    color: #9e9e9e;
-                    margin-right: 12px;
-                    &:before{
-                        content: "已保存"
-                    }
-                    &.on:before{
-                        content: "保存中..."
-                    }
-                }
-            }
-        }
-        .edit {
-            margin: 50px 0;
-            .edit-cell {
-                width: 100%;
-                margin-bottom: 30px;
-            }
-            .cover{
-                .el-radio{
-                    color: #999;
-                    .el-radio__label {
-                        padding-left: 10px;
-                    }
-                }
-                .cover-label {
-                    float: left;
-                    width: 122px;
-                    font-size: 16px;
-                }
-                .cover-input {
-                    margin-left: 122px;
-                    font-size: 14px;
-                    color: #999;
-                    .select-radio {
-                        margin-bottom: 16px;
-                    }
-                    .cover-images{
-                        .cover-add,.cover-img{
-                            position: relative;
-                            width: 150px;
-                            height: 105px;
-                            margin-right: 20px;
-                            display: inline-block;
-                            cursor: pointer;
-                            border-radius: 4px;
-                            overflow: hidden;
-                            img{
-                                width: 100%;
-                                min-height: 105px;
-                            }
-                        }
-                        .cover-add{
-                            position: relative;
-                            width: 150px;
-                            height: 105px;
-                            margin-right: 20px;
-                            display: inline-block;
-                            cursor: pointer;
-                            border-radius: 4px;
-                            overflow: hidden;
-                            background-color: #f0f1f3;
-                            i{
-                                position: absolute;
-                                left: 50%;
-                                top: 50%;
-                                font-size: 20px;
-                                margin-left: -.5em;
-                                margin-top: -.5em;
-                            }
-                        }
-                    }
-                }
-                .cover-tip {
-                    padding-top: 10px;
-                }
-            }
-            .control {
-                padding-left: 122px;
-                margin-bottom: 50px;
-                button{
-                    font-size: 16px;
-                    width: 140px;
-                    line-height: 1;
-                }
-                .gray{
-                    background-color: #f1f1f1;
-                    color: #a4a4a4;
-                    border-color: #f1f1f1;
+            .ql-toolbar {
+                border-bottom: 1px solid #e9e9e9 !important;
+                .undo, .redo {
+                    color: #555;
                     &:hover{
-                        background-color: #e4e4e4;
-                        color: #989898;
-                        border-color: #e4e4e4;
+                        color: #06c;
+                    }
+                    i{
+                        color: inherit;
                     }
                 }
+            }
+            .ql-container {
+                height: 400px;
+                font-size: 16px;
+                border: none;
+            }
+            .ql-formats {
+                padding-right: 20px;
+                border-right: 1px solid #D8D8D8;
+                button {
+                    width: 30px;
+                    height: 26px;
+                    outline: none;
+                    &:hover{
+                        color: #06c;
+                    }
+                    i{
+                        font-size: 17px;
+                        color: #555;
+                    }
+                }
+            }
+            img {
+                display: block;
+                margin: 0 auto;
+                margin-bottom: 1em;
             }
         }
     }
-   
 }
 </style>

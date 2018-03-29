@@ -4,7 +4,7 @@ import articleAPI from './customer'
 
 // 登录相关
 Mock.mock(/\/login/, {
-    'token': Mock.Random.string(20)
+    'token': Mock.Random.guid()
 })
 // 用户信息
 Mock.mock(/\/user\/info\.*/, {
@@ -13,7 +13,7 @@ Mock.mock(/\/user\/info\.*/, {
     data: {
         nickname: '超哥哥',
         headimgurl: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-        role: 'admin'
+        role: '0'
     }
 })
 

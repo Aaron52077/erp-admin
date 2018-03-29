@@ -8,16 +8,16 @@
             <div class="login-form-hd">登录</div>
             <div class="login-form-bd">
                 <div class="login-form-tips">输入您的帐号、密码登录</div>
-                <el-form-item prop="username">
-                    <el-input name="username" type="text" v-model="form.username" auto-complete='off' placeholder="手机号/用户名/邮箱" />
+                <el-form-item prop="name">
+                    <el-input name="username" type="text" v-model="form.name" auto-complete='off' placeholder="手机号/用户名/邮箱" />
                 </el-form-item>
-                <el-form-item prop="password">
-                    <el-input name="password" :type="pwdType" v-model="form.password" auto-complete='off' placeholder="输入密码" />
+                <el-form-item prop="pwd">
+                    <el-input name="password" :type="pwdType" v-model="form.pwd" auto-complete='off' placeholder="输入密码" />
                         <span class="pwdEye" @click="passwordToggle"><i :class="eyeType"></i>
                     </span>
                 </el-form-item> 
-                <el-form-item prop="command">
-                    <el-input name="command" type="text" v-model="form.command"  @keyup.enter.native="login('form')" auto-complete='off' placeholder="登录口令" />
+                <el-form-item prop="key">
+                    <el-input name="command" type="text" v-model="form.key"  @keyup.enter.native="login('form')" auto-complete='off' placeholder="登录口令" />
                 </el-form-item>   
                 <el-button type="primary" class="login-form-btn" :loading="loading" @click.native.prevent="login('form')">登录</el-button>
                 <el-row :gutter="20">
@@ -50,20 +50,20 @@ export default {
             pwdType: 'password',
             eyeType: 'el-icon-view',
             form: {
-                username: '',
-                password: '',
-                command: null
+                name: 'fyzjzs',
+                pwd: '123123',
+                key: 'fyzjzs'
             },
             loading: false,
             rules: {
-                username: [
+                name: [
                     { required: true, message: '请输入手机号/用户名/邮箱', trigger: 'blur' },
                     { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
                 ],
-                password: [
+                pwd: [
                     { required: true, message: '请输入密码', trigger: 'blur' }
                 ],
-                command: [
+                key: [
                     { required: true, message: '请输入登录口令', trigger: 'blur' }
                 ]
             }
@@ -73,9 +73,9 @@ export default {
         // 登录验证处理  
         login(formName) {
             this.$refs[formName].validate((valid) => {
-            if (valid) {
-                this.loading = true
-                this.$store.dispatch('get_login_data', this.form)
+                if (valid) {
+                    this.loading = true
+                    this.$store.dispatch('get_login_data', this.form)
                     .then((res) => {
                         this.loading = false
                         this.$message.success('登录成功')

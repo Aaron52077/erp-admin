@@ -3,37 +3,38 @@
         <!-- 搜索相关 -->
         <div class="filter-container">
             <div class="filter-flex">
-                <el-select style="width: 110px" clearable size="small" v-model="formJsonQuery.entry" placeholder="客户来源">
+                <el-select style="width: 110px" clearable v-model="formJsonQuery.entry" placeholder="客户来源">
                     <el-option v-for="(item,index) in entry" :key="index" :label="item.label" :value="item.value"></el-option>
                 </el-select>
-                <el-select @change='handleFilter' style="width: 140px" size="small" v-model="formJsonQuery.sort" placeholder="客户级别">
+                <el-select @change='handleFilter' style="width: 140px" v-model="formJsonQuery.sort" placeholder="客户级别">
                     <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key"></el-option>
                 </el-select>
                 <!-- <el-input @keyup.enter.native="handleFilter" clearable 
-                        style="width: 330px;" size="small"
+                        style="width: 330px;"
                         placeholder="客户姓名/电话/楼盘/区域位置/销售/客户需求/标签" 
                         v-model="formJsonQuery.title"></el-input> -->
-                <el-select clearable style="width: 130px" size="small" v-model="formJsonQuery.type" placeholder="类型">
+                <el-select clearable style="width: 130px" v-model="formJsonQuery.type" placeholder="类型">
                     <el-option v-for="item in typeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key"></el-option>
                 </el-select>
                 <!-- <el-date-picker
                     v-model="formJsonQuery.time"
                     type="daterange"
-                    size="small"
+                   
                     unlink-panels
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     :picker-options="pickerOptions">
                 </el-date-picker> -->
-                <el-button type="primary" style='margin-left:15px;' size="small" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
+                <el-button type="primary" style='margin-left:15px;' v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
                 <!-- <el-checkbox style='margin-left:15px;' @change='tableKey=tableKey+1' v-model="showReviewer">设计师</el-checkbox> -->
             </div>
+            <el-button type="primary" style='margin-right:10px;' v-waves icon="el-icon-plus" @click.native="handleCreate">添加新客户</el-button>
             <el-dropdown :hide-on-click="false">
-                <el-button type="primary" size="small">
+                <el-button type="primary">
                     更多<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item v-waves @click.native="handleCreate">添加新客户</el-dropdown-item>
+                    <el-dropdown-item v-waves>添加新客户</el-dropdown-item>
                     <el-dropdown-item v-waves @click.native="handleDownload">导出客户数据</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -41,6 +42,7 @@
         <!-- 表格 v-loading="loading" element-loading-text="给我一点时间"  -->
         <el-table :key='tableKey' 
                 :data="formJson"
+                :height="height"
                 border fit highlight-current-row>
             <el-table-column align="center" label="客户来源" width="100">
                 <template slot-scope="scope">
@@ -99,7 +101,7 @@
             <el-table-column align="center" label="操作" fixed="right" width="180">
                 <template slot-scope="scope">
                     <el-button type="text" size="mini" class="form-edit-btn" icon="el-icon-edit" @click="handleUpdate(scope.row)">编辑</el-button>
-                    <el-dropdown trigger="click" size="small">
+                    <el-dropdown trigger="click">
                         <el-button type="primary" size="mini">
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </el-button>
@@ -128,7 +130,7 @@
         </div>
         <!-- 编辑 -->
         <el-dialog :title="textMap[dialogStatus]" :visible.sync="editFormVisible" append-to-body>
-            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" size="small" label-width="80px" style='width:400px;margin-left:50px;'>
+            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="80px" style='width:400px;margin-left:50px;'>
                 <el-form-item label="姓名" prop="name">
                      <el-input v-model="temp.name" class="i-input" suffix-icon="i-icon-people"></el-input>
                 </el-form-item>
@@ -159,9 +161,9 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button size="small" @click="editFormVisible = false">取消</el-button>
-                <el-button size="small" v-if="dialogStatus=='create'" type="primary" @click="createData">创建</el-button>
-                <el-button size="small" v-else type="primary" @click="updateData">保存</el-button>
+                <el-button @click="editFormVisible = false">取消</el-button>
+                <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">创建</el-button>
+                <el-button v-else type="primary" @click="updateData">保存</el-button>
             </div>
         </el-dialog>
         <!-- 阅读量 -->
@@ -171,7 +173,7 @@
                 <el-table-column prop="pv" label="端口"></el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="small" @click="dialogPvVisible = false">完成</el-button>
+                <el-button type="primary" @click="dialogPvVisible = false">完成</el-button>
             </span>
         </el-dialog>
     </div> 
@@ -203,6 +205,7 @@ export default {
             formJson: null,     // 数据源
             total: null,        
             loading: true,
+            height:0,
             formJsonQuery: {
                 page: 1,
                 limit: 20,
@@ -300,7 +303,10 @@ export default {
         }
     },
     mounted() {
-        this.getformJson()   
+        this.getformJson()
+        this.$nextTick(() => {
+            this.height = window.innerHeight - 230
+        }) 
     },
     methods: {
         getformJson() {
@@ -449,7 +455,8 @@ export default {
 .filter-container {
     .display-flex();
     align-items: center;
-    margin: 15px 0;
+    padding: 15px 0;
+    background-color: #fff;
 }
 
 .pagination-container {

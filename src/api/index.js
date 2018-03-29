@@ -13,7 +13,7 @@ export function getLogin(info) {
 
 // 用户信息
 export function getUser(token) {
-    let res = request('/user/info', 'GET', token)
+    let res = request('/user/info', 'get', token)
     return res
 }
 
