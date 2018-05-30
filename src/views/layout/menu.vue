@@ -9,119 +9,20 @@
             <!-- 侧边导航 -->
             <!-- @tab-click="toggleSideBar" -->
             <el-tabs class="el-tabs-container" v-model="tabsVal" tab-position="left" @tab-click="hasSidebar(tabsVal)">    
-                <el-tab-pane label="营销" name="营销">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-formdata"></i> 营销</span>
+                <el-tab-pane v-for="(item,index) in menuJson" :name="item.name" :key="index">
+                    <span slot="label" class="icon-navbar"><i :class="item.icon"></i>{{item.name}}</span>
                     <div class="tabs-hd">
-                        <h3>营销</h3>
+                        <h3>{{item.name}}</h3>
                         <el-input
-                            size="small"
                             placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>    
+                            v-model="input21"
+                            size="mini"
+                            clearable>
+                        </el-input>
                     </div> 
                     <el-menu :default-active="$route.name" :default-openeds="defaultOpeneds">
                         <i-menuitem :json="outputRouter"></i-menuitem>
                     </el-menu> 
-                </el-tab-pane>
-                <el-tab-pane label="客户" name="客户">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-peoples"></i> 客户</span>
-                    <div class="tabs-hd">
-                        <h3>客户</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                    <el-menu :default-active="$route.name" :default-openeds="defaultOpeneds">
-                        <i-menuitem :json="outputRouter"></i-menuitem>
-                    </el-menu> 
-                </el-tab-pane>
-                <el-tab-pane label="设计" name="设计">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-edit"></i> 设计</span>
-                    <div class="tabs-hd">
-                        <h3>设计</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="合同" name="合同">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-contract"></i> 合同</span>
-                    <div class="tabs-hd">
-                        <h3>合同</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="工程" name="工程">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-team"></i> 工程</span>
-                    <div class="tabs-hd">
-                        <h3>工程</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="材料" name="材料">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-info"></i> 材料</span>
-                    <div class="tabs-hd">
-                        <h3>材料</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="成控" name="成控">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-xiadan"></i> 成控</span>
-                    <div class="tabs-hd">
-                        <h3>成控</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="报表" name="报表">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-echart"></i> 报表</span>
-                    <div class="tabs-hd">
-                        <h3>报表</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="设置" name="设置">
-                    <span slot="label" class="icon-navbar"><i class="i-icon-edits"></i> 设置</span>
-                    <div class="tabs-hd">
-                        <h3>设置</h3>
-                        <el-input
-                            size="small"
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="input21">
-                        </el-input>  
-                    </div>
                 </el-tab-pane>
             </el-tabs>
             <div class="user">
@@ -131,48 +32,21 @@
                     width="230"
                     trigger="click">
                     <el-menu><!-- 添加路由 router 水平排列 mode="horizontal" -->
-                        <el-menu-item index="1">
-                            <span slot="title">个人资料</span>
-                        </el-menu-item>
-                        <el-menu-item index="2">
-                            <span slot="title">修改密码</span>
-                        </el-menu-item>
-                        <el-menu-item index="3">
-                            <span slot="title">清除缓存</span>
-                        </el-menu-item>
-                        <el-menu-item index="4">
-                            <span slot="title">发送日报</span>
+                        <el-menu-item v-for="(item,index) in MenuJsons" :key="index" :index="item.name">
+                            <span slot="title">{{ item.name }}</span>
                         </el-menu-item>
                         <el-row class="user-menu">
-                            <el-col :span="6">
+                            <el-col :span="6" v-for="(item,idx) in menu" :key="idx">
                                 <a class="user-menu-link" href="javascript:void(0);">
-                                    <i class="el-icon-service"></i>
-                                    <span>帮助</span>
-                                </a>
-                            </el-col>
-                            <el-col :span="6">
-                                <a class="user-menu-link" href="javascript:void(0);">
-                                    <i class="el-icon-message"></i>
-                                    <span>社区</span>
-                                </a>
-                            </el-col>
-                            <el-col :span="6">
-                                <a class="user-menu-link" href="javascript:void(0);">
-                                    <i class="el-icon-edit"></i>
-                                    <span>博客</span>
-                                </a>
-                            </el-col>
-                            <el-col :span="6">
-                                <a class="user-menu-link" href="javascript:void(0);">
-                                    <i class="el-icon-document"></i>
-                                    <span>案例</span>
+                                    <i :class="item.icon"></i>
+                                    <span>{{item.name}}</span>
                                 </a>
                             </el-col>
                         </el-row>
-                        <el-menu-item index="5">
+                        <el-menu-item index="a">
                             <span slot="title">工作日报</span>
                         </el-menu-item>
-                        <el-menu-item index="6" @click.native="hanldeTips">
+                        <el-menu-item index="b" @click.native="hanldeTips">
                             <span slot="title">退出登录</span>
                         </el-menu-item>
                     </el-menu>
@@ -211,7 +85,78 @@ export default {
             tipsVisible: false,     // 用户相关操作信息
             input21: '',
             tabsVal: '营销',        // 默认第一个选项卡的 name
-            outputRouter: []
+            outputRouter: [],
+            menuJson: [
+                {
+                    "name": "营销",
+                    "icon": "i-icon-formdata"
+                },
+                {
+                    "name": "客户",
+                    "icon": "i-icon-peoples"
+                },
+                {
+                    "name": "设计",
+                    "icon": "i-icon-edit"
+                },
+                {
+                    "name": "合同",
+                    "icon": "i-icon-contract"
+                },
+                {
+                    "name": "工程",
+                    "icon": "i-icon-team"
+                },
+                {
+                    "name": "材料",
+                    "icon": "i-icon-info"
+                },
+                {
+                    "name": "成控",
+                    "icon": "i-icon-xiadan"
+                },
+                {
+                    "name": "报表",
+                    "icon": "i-icon-echart"
+                },
+                {
+                    "name": "设置",
+                    "icon": "i-icon-edits"
+                }
+            ],
+            MenuJsons: [
+                {
+                    "name": "个人资料"
+                },
+                {
+                    "name": "修改密码"
+                },
+                {
+                    "name": "清除缓存"
+                },
+                {
+                    "name": "发送日报"
+                },
+                
+            ],
+            menu: [
+                {
+                    "name": "帮助",
+                    "icon": "el-icon-service"
+                },
+                {
+                    "name": "社区",
+                    "icon": "el-icon-message"
+                },
+                {
+                    "name": "博客",
+                    "icon": "el-icon-edit"
+                },
+                {
+                    "name": "案例",
+                    "icon": "el-icon-document"
+                }
+            ]
         }
     },
     computed: {

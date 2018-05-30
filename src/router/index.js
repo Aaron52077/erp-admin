@@ -16,7 +16,7 @@ export const routes = [
         name: '首页',
         path: '/index',
         redirect: 'index/home',
-        meta: { login: true, role: '0' },
+        meta: { login: true },
         component: _import('layout/index'),
         children: [
             {
@@ -35,7 +35,7 @@ export const routes = [
                                 name: '客户管理',
                                 path: 'a',
                                 icon: 'i-icon-table',
-                                component: _import('example/index')
+                                component: _import('table/index')
                             },
                             {
                                 name: '统计分析',
@@ -55,13 +55,13 @@ export const routes = [
                                 name: '公司介绍',
                                 path: 'a',
                                 icon: 'i-icon-home',
-                                component: _import('example/index')
+                                component: _import('tree/index')
                             },
                             {
                                 name: '设计团队',
                                 path: 'b',
                                 icon: 'i-icon-peoples',
-                                component: _import('example/form')
+                                component: _import('form/form')
                             }
                         ]
                     }
@@ -71,16 +71,38 @@ export const routes = [
                 name: '客户',
                 path: 'customer',
                 icon: 'i-icon-people',
-                component: _import('example/index')
+                component: view,
+                children: [
+                    {
+                        name: '用户管理',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('table/index')
+                    },
+                    {
+                        name: '客户相关',
+                        path: 'b',
+                        icon: 'i-icon-peoples',
+                        component: _import('form/form')
+                    }
+                ]
             },
             {
-                name: '表单',
+                name: '设计',
                 path: 'electric',
                 icon: 'i-icon-edit',
-                component: _import('example/form')
+                component: view,
+                children: [
+                    {
+                        name: '设计人员',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('table/index')
+                    }
+                ]
             },
             {
-                name: '短信营销',
+                name: '合同',
                 path: 'sms',
                 component: view
             }     

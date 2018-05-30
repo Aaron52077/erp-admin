@@ -326,7 +326,6 @@ export default {
             this.getformJson()
         },
         handleCurrentChange(val) {
-            console.log(val)
             this.formJsonQuery.page = val
             this.getformJson()
         },
