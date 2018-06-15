@@ -52,6 +52,7 @@ instance.interceptors.response.use(response => {
 export const request = async(url = '', type = 'GET', data = {}) => {
     let result
     type = type.toUpperCase()
+    
     if (type === 'GET') {
         await instance.get(url, { params: data })
         .then(res => {
