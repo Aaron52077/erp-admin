@@ -7,15 +7,14 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.login)) { // 是否需要登录
         if (cache.getToken()) {
             if (to.path === '/login') {
-                next('/')   
+                next('/')
             } else {
                 if (store.state.user) {
-                      assessPermission(store.state.user.role, to.meta.role)
+                    assessPermission(store.state.user.role, to.meta.role)
                 } else {
                     store.dispatch('get_user_data').then(res => {
                         assessPermission(res.role, to.meta.role)
-                    })
-                    .catch(err => {
+                    }).catch(err => {
                         // 可根据错误信息，做相应需求，这里默认token值失效
                         // window.alert('登录已失效，请重新登录')
                         this.$message.error('登录已失效，请重新登录');
@@ -28,7 +27,7 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         next()
-   }
+    }
     function goLoginPage() {
         next({ path: '/login', query: { redirect: to.fullPath } })
     }
@@ -44,7 +43,7 @@ router.beforeEach((to, from, next) => {
         }
         pass ? next() : next('/401')
     }
-  })
+})
 
 // 异步路由
 // function filterAsyncRoutes(AsyncRoutes, userRole, next) {
