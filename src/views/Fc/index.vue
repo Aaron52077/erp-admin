@@ -50,9 +50,9 @@ export default {
             pwdType: 'password',
             eyeType: 'el-icon-view',
             form: {
-                name: 'fyzjzs',
+                name: 'admin',
                 pwd: '123123',
-                key: 'fyzjzs'
+                key: 'admin'
             },
             loading: false,
             rules: {

@@ -15,7 +15,7 @@ export const routes = [
     {
         name: '首页',
         path: '/index',
-        redirect: 'index/home',
+        redirect: 'index/home/crm/b',
         meta: { login: true },
         component: _import('layout/index'),
         children: [
@@ -32,16 +32,16 @@ export const routes = [
                         component: view,
                         children: [
                             {
-                                name: '客户管理',
-                                path: 'a',
-                                icon: 'i-icon-table',
-                                component: _import('table/index')
-                            },
-                            {
                                 name: '统计分析',
                                 path: 'b',
                                 icon: 'i-icon-echart',
                                 component: _import('home/index'),
+                            },
+                            {
+                                name: '客户管理',
+                                path: 'a',
+                                icon: 'i-icon-table',
+                                component: _import('table/index')
                             }
                         ]
                     },
@@ -104,8 +104,81 @@ export const routes = [
             {
                 name: '合同',
                 path: 'sms',
-                component: view
-            }     
+                component: view,
+                children: [
+                    {
+                        name: '合同标题',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('table/index')
+                    }
+                ]
+            },
+            {
+                name: '工程',
+                path: 'project',
+                component: view,
+                children: [
+                    {
+                        name: '工程标题',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('update/update')
+                    }
+                ]
+            },
+            {
+                name: '材料',
+                path: 'material',
+                component: view,
+                children: [
+                    {
+                        name: '材料标题',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('update/update')
+                    }
+                ]
+            },
+            {
+                name: '成控',
+                path: 'control',
+                component: view,
+                children: [
+                    {
+                        name: '成控标题',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('update/update')
+                    }
+                ]
+            },
+            {
+                name: '报表',
+                path: 'excel',
+                component: view,
+                children: [
+                    {
+                        name: '报表标题',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('update/update')
+                    }
+                ]
+            },
+            {
+                name: '设置',
+                path: 'setup',
+                component: view,
+                children: [
+                    {
+                        name: '设置标题',
+                        path: 'a',
+                        icon: 'i-icon-home',
+                        component: _import('update/update')
+                    }
+                ]
+            }         
         ]
     },
     {
