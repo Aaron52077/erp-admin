@@ -1,236 +1,252 @@
 *, :after, :before {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 body {
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-  font-size: 14px;
-  color: #666;
-  overflow-y: auto;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    font-size: 14px;
+    color: #666;
+    overflow-y: auto;
 }
+
+
 /*滚动条样式*/
+
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  -webkit-appearance: none;
-  overflow: auto;
+    width: 10px;
+    height: 10px;
+    -webkit-appearance: none;
+    overflow: auto;
 }
+
+
 /* ::-webkit-scrollbar-button:end:increment, 
-::-webkit-scrollbar-button:start:decrement, 默认导航的顶部和尾部  */ 
+::-webkit-scrollbar-button:start:decrement, 默认导航的顶部和尾部  */
+
 ::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  background-color:#e6e6e6;
-  min-height:25px;
-  min-width:25px;
-  border:1px solid #e0e0e0;
+    /*滚动条里面小方块*/
+    background-color: #e6e6e6;
+    min-height: 25px;
+    min-width: 25px;
+    border: 1px solid #e0e0e0;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #ccc;
+    background-color: #ccc;
 }
+
 ::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  background-color:#f7f7f7;
-  border:1px solid #efefef;
+    /*滚动条里面轨道*/
+    background-color: #f7f7f7;
+    border: 1px solid #efefef;
 }
+
 ::-webkit-scrollbar-track-piece {
-  background-color: #f0f0f0;
-  border-radius: 3px;
+    background-color: #f0f0f0;
+    border-radius: 3px;
 }
+
 html {
     height: 100%;
     line-height: 1.15;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     background-color: #eee;
-  }
-  body {
+}
+
+body {
     margin: 0;
-  }
-  article,
-  aside,
-  footer,
-  header,
-  nav,
-  section {
+}
+
+article, aside, footer, header, nav, section {
     display: block;
-  }
-  h1 {
+}
+
+h1 {
     font-size: 2em;
     margin: 0.67em 0;
-  }
-  
-  figcaption,
-  figure,
-  main {  
+}
+
+figcaption, figure, main {
     display: block;
-  }
-  figure {
+}
+
+figure {
     margin: 1em 40px;
-  }
-  hr {
+}
+
+hr {
     box-sizing: content-box;
     height: 0;
     overflow: visible;
-  }
-  pre {
+}
+
+pre {
     font-family: monospace, monospace;
     font-size: 1em;
-  }
-  a {
+}
+
+a {
     text-decoration: none;
     outline: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
-  }
-  abbr[title] {
+}
+
+abbr[title] {
     border-bottom: none;
     text-decoration: underline;
     text-decoration: underline dotted;
-  }
-  b,
-  strong {
+}
+
+b, strong {
     font-weight: inherit;
-  }
-  b,
-  strong {
+}
+
+b, strong {
     font-weight: bolder;
-  }
-  code,
-  kbd,
-  samp {
+}
+
+code, kbd, samp {
     font-family: monospace, monospace;
     font-size: 1em;
-  }
-  dfn {
+}
+
+dfn {
     font-style: italic;
-  }
-  mark {
+}
+
+mark {
     background-color: #ff0;
     color: #000;
-  }
-  small {
+}
+
+small {
     font-size: 80%;
-  }
-  sub,
-  sup {
+}
+
+sub, sup {
     font-size: 75%;
     line-height: 0;
     position: relative;
     vertical-align: baseline;
-  }
-  
-  sub {
+}
+
+sub {
     bottom: -0.25em;
-  }
-  
-  sup {
+}
+
+sup {
     top: -0.5em;
-  }
-  audio,
-  video {
+}
+
+audio, video {
     display: inline-block;
-  }
-  audio:not([controls]) {
+}
+
+audio:not([controls]) {
     display: none;
     height: 0;
-  }
-  img {
+}
+
+img {
     border-style: none;
-  }
-  svg:not(:root) {
+}
+
+svg:not(:root) {
     overflow: hidden;
-  }
-  button,
-  input,
-  optgroup,
-  select,
-  textarea {
+}
+
+button, input, optgroup, select, textarea {
     font-family: sans-serif;
     font-size: 100%;
     line-height: 1.15;
     margin: 0;
-  }
-  button,
-  input {
+}
+
+button, input {
     overflow: visible;
-  }
-  button,
-  select {
+}
+
+button, select {
     text-transform: none;
-  }
-  button,
-  html [type="button"],
-  [type="reset"],
-  [type="submit"] {
+}
+
+button, html [type="button"], [type="reset"], [type="submit"] {
     -webkit-appearance: button;
-  }
-  button::-moz-focus-inner,
-  [type="button"]::-moz-focus-inner,
-  [type="reset"]::-moz-focus-inner,
-  [type="submit"]::-moz-focus-inner {
+}
+
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
     border-style: none;
     padding: 0;
-  }
-  
-  button:-moz-focusring,
-  [type="button"]:-moz-focusring,
-  [type="reset"]:-moz-focusring,
-  [type="submit"]:-moz-focusring {
+}
+
+button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring {
     outline: 1px dotted ButtonText;
-  }
-  fieldset {
+}
+
+fieldset {
     padding: 0.35em 0.75em 0.625em;
-  }
-  
-  legend {
+}
+
+legend {
     box-sizing: border-box;
     color: inherit;
     display: table;
     max-width: 100%;
-    padding: 0; /* 3 */
+    padding: 0;
+    /* 3 */
     white-space: normal;
-  }
-  progress {
+}
+
+progress {
     display: inline-block;
     vertical-align: baseline;
-  }
-  textarea {
+}
+
+textarea {
     overflow: auto;
-  }
-  [type="checkbox"],
-  [type="radio"] {
+}
+
+[type="checkbox"], [type="radio"] {
     box-sizing: border-box;
     padding: 0;
-  }
-  [type="number"]::-webkit-inner-spin-button,
-  [type="number"]::-webkit-outer-spin-button {
+}
+
+[type="number"]::-webkit-inner-spin-button, [type="number"]::-webkit-outer-spin-button {
     height: auto;
-  }
-  [type="search"] {
+}
+
+[type="search"] {
     -webkit-appearance: textfield;
     outline-offset: -2px;
-  }
-  [type="search"]::-webkit-search-cancel-button,
-  [type="search"]::-webkit-search-decoration {
+}
+
+[type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
-  }
-  ::-webkit-file-upload-button {
+}
+
+::-webkit-file-upload-button {
     -webkit-appearance: button;
     font: inherit;
-  }
-  details,
-  menu {
+}
+
+details, menu {
     display: block;
-  }
-  summary {
+}
+
+summary {
     display: list-item;
-  }
-  canvas {
+}
+
+canvas {
     display: inline-block;
-  }
-  template {
+}
+
+template {
     display: none;
-  }
-  [hidden] {
+}
+
+[hidden] {
     display: none;
-  }
-  
+}
