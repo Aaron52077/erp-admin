@@ -184,7 +184,7 @@ export const routes = [
     {
         name: 'login',
         path: '/login',
-        component: _import('Fc/index')
+        component: _import('login/index')
     },
     { 
         path: '/404', 
