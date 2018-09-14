@@ -13,12 +13,6 @@
                     <span slot="label" class="icon-navbar"><i :class="item.icon"></i>{{item.name}}</span>
                     <div class="tabs-hd">
                         <h3>{{item.name}}</h3>
-                        <el-input
-                            placeholder="请输入内容"
-                            v-model="input21"
-                            size="mini"
-                            clearable>
-                        </el-input>
                     </div> 
                     <el-menu :default-active="$route.name" :default-openeds="defaultOpeneds">
                         <i-menuitem :json="outputRouter"></i-menuitem>
@@ -83,7 +77,6 @@ export default {
             filterRoutes: [],       // 过滤后的路由
             defaultOpeneds: [],     // 默认打开的二级菜单
             tipsVisible: false,     // 用户相关操作信息
-            input21: '',
             tabsVal: '营销',        // 默认第一个选项卡的 name
             outputRouter: [],
             menuJson: [

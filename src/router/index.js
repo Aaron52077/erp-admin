@@ -55,7 +55,7 @@ export const routes = [
                                 name: '公司介绍',
                                 path: 'a',
                                 icon: 'i-icon-home',
-                                component: _import('tree/index')
+                                component: _import('aside/index')
                             },
                             {
                                 name: '设计团队',

@@ -2,7 +2,7 @@
 <div class="app-wrapper" :class="{'hideSidebar': !hasSidebar.opened}">
     <el-container direction="horizontal">
         <!-- 菜单栏 -->
-       <i-menu></i-menu>
+        <i-menu></i-menu>
         <!-- 容器 -->
         <el-container direction="vertical">
             <!-- 页面 -->
