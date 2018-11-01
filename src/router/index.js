@@ -46,7 +46,7 @@ export const routes = [
                         ]
                     },
                     {
-                        name: '网销神器',
+                        name: '公司相关',
                         path: 'plugins',
                         icon: 'i-icon-product',
                         component: view,
@@ -77,13 +77,13 @@ export const routes = [
                         name: '用户管理',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('table/index')
+                        component: _import('loadmore/index')
                     },
                     {
                         name: '客户相关',
                         path: 'b',
                         icon: 'i-icon-peoples',
-                        component: _import('form/form')
+                        component: _import('ball/index')
                     }
                 ]
             },
@@ -123,7 +123,7 @@ export const routes = [
                         name: '工程标题',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('update/update')
+                        component: _import('update/index')
                     }
                 ]
             },
@@ -136,7 +136,7 @@ export const routes = [
                         name: '材料标题',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('update/update')
+                        component: _import('update/index')
                     }
                 ]
             },
@@ -149,7 +149,7 @@ export const routes = [
                         name: '成控标题',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('update/update')
+                        component: _import('update/index')
                     }
                 ]
             },
@@ -162,7 +162,7 @@ export const routes = [
                         name: '报表标题',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('update/update')
+                        component: _import('update/index')
                     }
                 ]
             },
@@ -175,7 +175,7 @@ export const routes = [
                         name: '设置标题',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('update/update')
+                        component: _import('update/index')
                     }
                 ]
             }         

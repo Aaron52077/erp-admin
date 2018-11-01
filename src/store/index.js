@@ -52,7 +52,7 @@ const actions = {
             getLogin(params).then(res => {
                 if (res && res.token) {
                     cache.setToken(res.token)
-                    // commit('set_role', res.data)
+                    commit('set_role', res.data)
                     resolve(res) 
                 } else {
                     reject(new Error('暂无登录数据！'))

@@ -4,11 +4,11 @@
             <el-col class="count-item" :xs="24" :sm="12" :lg="6" v-for="(item,index) in list" :key="index">
                 <div class="item-container" :class="`item-container-${index + 1}`" @click="setEchartData(item.type)">
                     <div class="icon">
-                        <i :class="item.icon" ></i>
+                        <i :class="item.icon"></i>
                     </div>
                     <div class="text">
                         <div class="title">{{item.title}}</div>
-                        <i-countTo class="number" :startVal="0" :endVal="item.endVal" :duration="5000"></i-countTo>
+                        <wl-countTo class="number" :startVal="0" :endVal="item.endVal" :duration="5000"></wl-countTo>
                     </div>
                 </div>
             </el-col>

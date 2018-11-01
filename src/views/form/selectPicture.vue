@@ -4,7 +4,7 @@
             <p>还没有图片~</p>
         </div>
         <el-radio-group v-model="selected" class="img-list">
-            <div class="img-item" v-for="(item,index) in json">
+            <div class="img-item" v-for="(item,index) in json" :key="index">
                 <el-radio-button :label="item"><img :src="item"></el-radio-button>
             </div>
         </el-radio-group>

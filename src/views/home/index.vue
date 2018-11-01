@@ -1,11 +1,11 @@
 <template>
     <div id="home">
         <!-- card -->
-        <i-card @setEchartData="echartData"></i-card>
+        <wl-card @setEchartData="echartData"></wl-card>
         <!-- echarts -->
         <el-row>
             <el-col :span="24">
-                <i-chart :chart-data="lineChartData"></i-chart>
+                <wl-chart :chart-data="lineChartData"></wl-chart>
             </el-col>
         </el-row>
         <el-row :gutter="12">
@@ -17,8 +17,8 @@
     </div>
 </template>
 <script>
-import iCard from './components/i_card'
-import iChart from './components/i_chart'
+import wlCard from './components/card'
+import wlChart from './components/chart'
 const lineChartData = {
     newVisitis: {
         expectedData: [100, 120, 161, 134, 105, 160, 165],
@@ -49,7 +49,7 @@ export default {
             this.lineChartData = lineChartData[type]
         }
     },
-    components: { iCard, iChart }
+    components: { wlCard, wlChart }
 }
 </script>
 <style lang='less'>
@@ -58,6 +58,6 @@ export default {
     padding-bottom: 20px;
     padding-right: 30px;
     background-color: #fff;
-    height: 1800px;
+    height: 1200px;
 }
 </style>

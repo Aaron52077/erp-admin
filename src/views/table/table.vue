@@ -259,34 +259,7 @@ export default {
                 title: [{ required: true, message: '标题为必填项', trigger: 'blur' }]
             },
             downloadLoading: false,
-            currentRow: null,
-            pickerOptions: {
-                shortcuts: [{
-                    text: '最近一周',
-                    onClick(picker) {
-                        const end = new Date();
-                        const start = new Date();
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '最近一个月',
-                    onClick(picker) {
-                        const end = new Date();
-                        const start = new Date();
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: '最近三个月',
-                        onClick(picker) {
-                        const end = new Date();
-                        const start = new Date();
-                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                        picker.$emit('pick', [start, end]);
-                    }
-                }]
-            }
+            currentRow: null
         }
     },
     filters: {
@@ -428,6 +401,7 @@ export default {
                 const tHeader = ['客户来源', '客户级别', '客户需求', '楼盘信息', '联系电话', '市场接待', '时间']
                 const filterVal = ['type', 'status', 'title', 'addr', 'moblie', 'name', 'timestamp']
                 const data = this.formatJson(filterVal, this.formJson)
+                console.log(this.formJson)
                 excel.export_json_to_excel(tHeader, data, 'table-list')
                 this.downloadLoading = false
             })

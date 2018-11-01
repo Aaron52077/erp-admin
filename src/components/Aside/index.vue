@@ -2,7 +2,7 @@
     <div class="wuli-aside" @after-leave="afterLeave">
         <!-- 对transition不了接的可以查看vue2.0官方文档的“过渡 & 动画” 链接：https://cn.vuejs.org/v2/guide/transitions.html-->
         <transition name="fade" @touchmove.stop.prevent>
-            <div class="menu-mask" v-show="closed && modal"></div>
+            <div class="slide-mask" v-show="closed && modal"></div>
         </transition>
         <!-- 这里才是侧栏代码部分 -->
         <transition name="slide-fade">
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.menu-mask {
+.slide-mask {
     position: fixed;
     top: 0;
     left: 0;
@@ -94,8 +94,8 @@ export default {
 .slide-fade-enter,
 .slide-fade-leave-to {
     opacity: 0;
-    -webkit-transform: translate(-286px, 0px);
-    transform: translate(-286px, 0px);
+    -webkit-transform: translate(2000px, 0px);
+    transform: translate(2000px, 0px);
     -webkit-transition: opacity 0.3s ease-in-out 0.3s,
         -webkit-transform 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out 0.3s, transform 0.3s ease-in-out;

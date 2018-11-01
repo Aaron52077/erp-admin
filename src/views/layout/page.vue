@@ -1,7 +1,7 @@
 <template>
 	<el-main class="main-container">
         <!-- 面包屑组件 -->
-        <i-breadcrumb class="breadcrumb" separator="/"></i-breadcrumb>
+        <wl-breadcrumb class="breadcrumb" separator="/"></wl-breadcrumb>
         <section class="page-panel" style="min-height: 100%">
             <transition name="el-fade-in-linear" mode="out-in">
                 <keep-alive>
@@ -10,7 +10,7 @@
             </transition>
         </section>
         <!-- top -->
-        <i-back-top></i-back-top> 
+        <wl-back-top></wl-back-top> 
     </el-main>
 </template>
 <script>

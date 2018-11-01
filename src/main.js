@@ -30,12 +30,12 @@ import loading from '@/components/Loading'
 import menuItem from '@/views/layout/menuItem'
 
 // 自定义组件
-Vue.component('i-breadcrumb', breadcrumb)
-Vue.component('i-sticky', sticky)
-Vue.component('i-back-top', backTop)
-Vue.component('i-countTo', countTo)
-Vue.component('i-loading', loading)
-Vue.component('i-menuitem', menuItem)
+Vue.component('wl-breadcrumb', breadcrumb)
+Vue.component('wl-sticky', sticky)
+Vue.component('wl-back-top', backTop)
+Vue.component('wl-countTo', countTo)
+Vue.component('wl-loading', loading)
+Vue.component('wl-menu-item', menuItem)
 
 Vue.config.productionTip = false
 // 第三方
@@ -57,8 +57,8 @@ Object.keys(filters).forEach(key => {
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
 })

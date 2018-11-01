@@ -9,7 +9,7 @@
                 </template>
                 <template v-for="(item,idx) in route.children">
                     <!-- 子路由里还有子路由的 -->
-                    <i-menuitem v-if="item.children" :json="[item]" :key="idx"></i-menuitem>
+                    <wl-menu-item v-if="item.children" :json="[item]" :key="idx"></wl-menu-item>
 
                     <!-- 子路由里没有子路由的 -->
                     <router-link v-else :to="{name: item.name}" :key="idx">

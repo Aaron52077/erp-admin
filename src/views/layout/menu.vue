@@ -15,7 +15,7 @@
                         <h3>{{item.name}}</h3>
                     </div> 
                     <el-menu :default-active="$route.name" :default-openeds="defaultOpeneds">
-                        <i-menuitem :json="outputRouter"></i-menuitem>
+                        <wl-menu-item :json="outputRouter"></wl-menu-item>
                     </el-menu> 
                 </el-tab-pane>
             </el-tabs>

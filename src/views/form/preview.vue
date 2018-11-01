@@ -37,7 +37,7 @@
                 <div class="more" v-if="json.cover_mode === 3 && json.coverImages.length > 1">
                     <h2 class="title">{{json.title}}</h2>
                     <div class="img">
-                        <ul><li v-for="(item,index) in json.coverImages"><img :src="item"></li></ul>
+                        <ul><li v-for="(item,index) in json.coverImages" :key="index"><img :src="item"></li></ul>
                     </div>
                     <div class="info">
                         <span>0 阅读</span> 

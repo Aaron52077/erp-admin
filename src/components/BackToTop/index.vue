@@ -14,7 +14,6 @@
 * bottom        组件距离底部的距离
 * right         组件距离右部的距离
 * duration      滚动动画持续时间，单位：毫秒
-*
 * @callback
 * onClick       触发点击的回调
 * complete      滚动到达顶部的回调
@@ -101,15 +100,15 @@ export default {
 }
 </script>
 <style lang='less'>
-.backTop{
+.backTop {
     position: fixed;
     z-index: 999;
     cursor: pointer;
     display: none;
-    &-show{
+    &-show {
         display: block;
     }
-    &-inner{
+    &-inner {
         width: 40px;
         height: 40px;
         background-color: #fff;
@@ -118,7 +117,7 @@ export default {
         box-shadow: 0 0 6px rgba(0,0,0,.12);
         cursor: pointer;
         z-index: 9;
-        i{
+        i {
             display: block;
             color: #409eff;
             text-align: center;
@@ -126,6 +125,5 @@ export default {
             line-height: 40px;
         }
     }
-    
 }  
 </style>

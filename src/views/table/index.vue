@@ -1,21 +1,15 @@
 <template>
     <div id="customer">
-        <!-- <el-alert
-            title="客户信息管理"
-            type="info"
-            description="可下载客户信息模板按模板批量导入客户信息"
-            :closable="false">
-        </el-alert> -->
         <!-- 数据表格组件 -->
-        <i-data-list></i-data-list>
+        <wl-data-list></wl-data-list>
     </div>
 </template>
 <script>
-import iDataList from './table'
+import wlDataList from './table'
 
 export default {
     name: 'customer',
-    components: { iDataList }
+    components: { wlDataList }
 };
 </script>
 <style lang='less' scoped>
