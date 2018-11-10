@@ -1,6 +1,6 @@
 # erp
 
-> this is a set of ERP solutions
+> 基于element-ui组件库搭建的企业级基础应用
 
 ## Build Setup
 
@@ -18,4 +18,6 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 项目部分截图
+![](https://github.com/Aaron52077/erp-admin/raw/master/static/img_01.png) 
+![](https://github.com/Aaron52077/erp-admin/raw/master/static/img_02.png) 
