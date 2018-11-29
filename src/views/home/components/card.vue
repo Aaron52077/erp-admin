@@ -8,7 +8,7 @@
                     </div>
                     <div class="text">
                         <div class="title">{{item.title}}</div>
-                        <wl-countTo class="number" :startVal="0" :endVal="item.endVal" :duration="5000"></wl-countTo>
+                        <wl-count-to class="number" :startVal="0" :endVal="item.endVal" :duration="5000"></wl-count-to>
                     </div>
                 </div>
             </el-col>

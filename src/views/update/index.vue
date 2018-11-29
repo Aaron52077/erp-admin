@@ -1,6 +1,8 @@
 <template>
     <div class="updata">
-        {{message}}
+        全局过滤器测试
+        {{nowTime | formatTime('{y}-{m}-{d}')}} 
+        距当前 {{timeStamp | getDiffTime}} 
     </div>
 </template>
 
@@ -8,11 +10,15 @@
 export default {
     data() {
         return {
-            message: '待更新...'
+            message: '待更新...',
+            nowTime: Date.now(),
+            numberText: 12000,
+            timeStamp: 1543471177,
         }
     }
 }
 </script>
+
 <style lang="less">
 .updata {
     padding: 50px;

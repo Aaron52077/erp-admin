@@ -18,23 +18,14 @@ import './assets/fonts/iconfont.css'
 // js
 import './permission'
 import './errorLog'
+import './packages/global'
 // mock数据 伪数据
 import './mock'
 
 // 自定义公共组件
-import breadcrumb from '@/components/Breadcrumb'
-import sticky from '@/components/Sticky'
-import backTop from '@/components/BackToTop'
-import countTo from '@/components/CountTo'
-import loading from '@/components/Loading'
 import menuItem from '@/views/layout/menuItem'
 
 // 自定义组件
-Vue.component('wl-breadcrumb', breadcrumb)
-Vue.component('wl-sticky', sticky)
-Vue.component('wl-back-top', backTop)
-Vue.component('wl-countTo', countTo)
-Vue.component('wl-loading', loading)
 Vue.component('wl-menu-item', menuItem)
 
 Vue.config.productionTip = false
@@ -54,7 +45,7 @@ import * as filters from './filters' // global filters
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
-
+    
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
@@ -62,3 +53,4 @@ new Vue({
     store,
     render: h => h(App)
 })
+

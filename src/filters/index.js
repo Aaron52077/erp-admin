@@ -1,9 +1,5 @@
-//  过滤上万数据
-export function devide_10k(num) {
-    return num >= 10000 ? (num / 10000).toFixed(1) + '万' : num
-}
 // 格式化时间
-export function parseTime(time, cFormat) {
+export function formatTime(time, cFormat) {
     if (arguments.length === 0) {
         return null
     }
@@ -38,8 +34,9 @@ export function parseTime(time, cFormat) {
     })
     return timer
 }
+
 // 过滤时间差
-export function formatTime(time, option) {
+export function getDiffTime(time) {
     time = +time * 1000
     const d = new Date(time)
     const now = Date.now()
@@ -54,10 +51,17 @@ export function formatTime(time, option) {
         return Math.ceil(diff / 3600) + '小时前'
     } else if (diff < 3600 * 24 * 2) {
         return '1天前'
-    }
-    if (option) {
-        return parseTime(time, option)
-    } else {
+    }else {
         return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
-    }
+    } 
+}
+
+//  过滤上万数据
+export function toThousand(num) {
+    return num >= 10000 ? (num / 10000).toFixed(1) + '万' : num
+}
+
+// 过滤千分符
+export function toThousandFilter(num) {
+    return (+num || 0).toString().replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
