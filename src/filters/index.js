@@ -37,12 +37,10 @@ export function formatTime(time, cFormat) {
 
 // 过滤时间差
 export function getDiffTime(time) {
-    time = +time * 1000
     const d = new Date(time)
     const now = Date.now()
 
     const diff = (now - d) / 1000
-
     if (diff < 30) {
         return '刚刚'
     } else if (diff < 3600) { // less 1 hour

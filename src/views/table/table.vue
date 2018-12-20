@@ -95,7 +95,7 @@
             </el-table-column>
             <el-table-column width="150" align="center" prop="timestamp"  label="时间" sortable>
                 <template slot-scope="scope">
-                    <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+                    <span>{{scope.row.timestamp | formatTime('{y}-{m}-{d} {h}:{i}')}}</span>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="操作" fixed="right" width="180">
@@ -181,7 +181,7 @@
 <script>
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/table'
 import waves from '@/directive/waves' // 水波纹指令
-import { parseTime } from '@/utils'
+import { formatTime } from '@/utils'
 
 const typeOptions = [
   { key: '1', display_name: '意向客户' },
@@ -409,7 +409,7 @@ export default {
         formatJson(filterVal, jsonData) {
             return jsonData.map(v => filterVal.map(j => {
                 if (j === 'timestamp') {
-                    return parseTime(v[j])
+                    return formatTime(v[j])
                 } else {
                     return v[j]
                 }

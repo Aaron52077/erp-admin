@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-// 自定义公共组件global加载register组件 (可按需)
+// 自定义公共组件全局注册组件 (可按需)
 const components = {
     'wl-breadcrumb': 'Breadcrumb',
     'wl-sticky': 'Sticky',
