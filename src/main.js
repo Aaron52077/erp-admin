@@ -3,7 +3,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-import globalData from './global.js'
+import globalModule from './global.js'
 
 // 第三方
 import axios from 'axios'
@@ -58,7 +58,7 @@ new Vue({
     router,
     store,
     created(){
-        globalData.init(this)
+        globalModule.init(this)
     },
     render: h => h(App)
 })

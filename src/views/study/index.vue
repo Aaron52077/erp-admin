@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { deepClone, uniqueArr, uniqueObj, getQueryObject } from '@/utils'
+import { deepClone, uniqueArr, uniqueObj1, uniqueObj2, getQueryObject } from '@/utils'
 export default {
     data() {
         return {
@@ -56,7 +56,8 @@ export default {
     computed: {
         uniqueArray() {
             const arr = deepClone(this.arrObj)
-            return uniqueObj(arr, 'id')
+            // return uniqueObj1(arr, 'id')
+            return uniqueObj2(arr)
         },
         queryObject() {
             return getQueryObject(this.url)

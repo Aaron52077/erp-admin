@@ -152,10 +152,18 @@ export function uniqueArr(array) {
     return Array.from(new Set(array))
 }
 
-// 复杂数组去重
-export function uniqueObj(array, key) {
+// 复杂数组去重方法1
+export function uniqueObj1(array, key) {
     const res = new Map();
-    // 返回arr数组过滤后的结果，结果为一个数组
-    // 过滤条件是，如果res中没有某个键(key)，就设置这个键的值为1
+    // res中没有某个键(key)，就设置这个键的值为1
     return array.filter((m) => !res.has(m[key]) && res.set(m[key], 1))
+}
+
+// 复杂数组去重方法2
+export function uniqueObj2(array) {
+    let obj = {};
+    return array.reduce((cur, next) => {
+        obj[next.id] ? "" : obj[next.id] = true && cur.push(next);
+        return cur;
+    }, []) 
 }
