@@ -1,18 +1,19 @@
 /* eslint-disable */
 import Vue from 'vue'
 import store from '@/store'
+import cache from '@/utils/cache'
 import { cloneDeep, size } from 'lodash'
 
 // 流加载
 import './utils/ljs'
-import tools from './utils/tools'
 
 let global = new Vue({
     template: '<div></div>',
     data: {
         ENV: process.env.NODE_ENV,
         apihost: process.env.BASE_API,
-        token: tools.getValue('token') || '',
+        debug: (process.env.NODE_ENV || '').indexOf('development') > -1 || window.localStorage && window.localStorage.devOnline == 1,
+        token: cache.getLocal('token') || cache.getCookie('Authorization') || '',
         dh: document.body.clientHeight,
         dw: document.body.clientWidth,
         lang: localStorage.lang || 'zh-cn',
@@ -24,7 +25,7 @@ let global = new Vue({
             return this.dw < 800
         },
         getData() {
-            return store.state.app.datas
+            return store.state.datas
         },
         setLang: {
             get() {
@@ -35,6 +36,16 @@ let global = new Vue({
                 this.$translate.setLang(value)
                 this.lang = value
                 localStorage.lang = value
+            }
+        },
+        setToken: {
+            get() {
+                return this.token;
+            },
+            set(val) {
+                this.token = val;
+                cache.setLocal('token', val);
+                if(val == '') cache.delCookie('Authorization');
             }
         },
     },
@@ -61,6 +72,9 @@ let global = new Vue({
         },
         cloneDeep: cloneDeep,
         size: size,
+        log(...arg){
+            this.debug && console.log(...arg);
+        },
         init(vm) {
             window.DevVue = vm;
             this.$translate.setLang(this.lang);
@@ -73,10 +87,33 @@ let global = new Vue({
                 Vue.prototype.$t = vm.t;
             }
         },
+        load(...arr){
+            var plugins = [];
+            const config = {
+                'viewer':['/static/plugins/viewer/viewer.min.css','/static/plugins/viewer/viewer.min.js'],
+                'jquery':['/static/plugins/jquery.js'],
+                'moment':['/static/plugins/moment.min.js']
+            }
+            arr.map(item => {
+                let pluginName = (typeof item == 'string') ? item.toLocaleLowerCase() : item;
+                if(config[pluginName]){
+                    plugins.push(...config[pluginName]);
+                }else{
+                    plugins.push(pluginName);
+                }
+            });
+            this.ljs.load(...plugins);
+        },
+        print(obj) {
+            // 针对打印有特殊样式需要自定义时，请使用@media print并加上合理限定。 参考资料 http://www.daqianduan.com/6370.html
+            global.load('jquery', '/static/plugins/printArea.js', () => {
+                if($(obj) && $(obj).length) $(obj).printArea();
+            });
+        },
     }
 })
 
 // Vue 原型链挂载
-Vue.prototype.globalData = global
+Vue.prototype.gModule = global
 
 export default global

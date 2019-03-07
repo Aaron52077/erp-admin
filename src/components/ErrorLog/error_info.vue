@@ -8,7 +8,7 @@
             </el-table-column>
             <el-table-column label="时间" align="center" width="150">
                 <template slot-scope="scope">
-                    {{scope.row.time | parseTime('{y}-{m}-{d} {h}:{i}')}}
+                    {{scope.row.time | unixToStr('yyyy-MM-dd hh:mm')}}
                 </template>
             </el-table-column>
             <el-table-column label="bug信息" min-width="350">

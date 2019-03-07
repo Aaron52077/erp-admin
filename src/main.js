@@ -3,7 +3,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-import cache from '@/utils/cache'
 import globalData from './global.js'
 
 // 第三方

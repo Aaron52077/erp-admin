@@ -95,7 +95,7 @@
             </el-table-column>
             <el-table-column width="150" align="center" prop="timestamp"  label="时间" sortable>
                 <template slot-scope="scope">
-                    <span>{{scope.row.timestamp | formatTime('{y}-{m}-{d} {h}:{i}')}}</span>
+                    <span>{{scope.row.timestamp | unixToStr('yyyy-MM-dd hh:mm')}}</span>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="操作" fixed="right" width="180">
@@ -181,7 +181,7 @@
 <script>
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/table'
 import waves from '@/directive/waves' // 水波纹指令
-import { formatTime } from '@/utils'
+import { unixToStr } from '@/filters'
 
 const typeOptions = [
   { key: '1', display_name: '意向客户' },
@@ -401,7 +401,6 @@ export default {
                 const tHeader = ['客户来源', '客户级别', '客户需求', '楼盘信息', '联系电话', '市场接待', '时间']
                 const filterVal = ['type', 'status', 'title', 'addr', 'moblie', 'name', 'timestamp']
                 const data = this.formatJson(filterVal, this.formJson)
-                console.log(this.formJson)
                 excel.export_json_to_excel(tHeader, data, 'table-list')
                 this.downloadLoading = false
             })
@@ -409,7 +408,7 @@ export default {
         formatJson(filterVal, jsonData) {
             return jsonData.map(v => filterVal.map(j => {
                 if (j === 'timestamp') {
-                    return formatTime(v[j])
+                    return unixToStr(v[j])
                 } else {
                     return v[j]
                 }

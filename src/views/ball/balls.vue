@@ -45,12 +45,12 @@ export default {
                     let x = rect.left - 32;
                     let y = -(window.innerHeight - rect.top - 22); //负数,因为是从左上角往下的的方向
                     el.style.display = '' //清空display
-                    el.style.webkitTransform = `translate3d(0,${y}px,0)`
-                    el.style.transform = `translate3d(0,${y}px,0)`
+                    el.style.webkitTransform = `translate(0,${y}px)`
+                    el.style.transform = `translate(0,${y}px)`
                     //处理内层动画
                     let inner = el.getElementsByClassName('inner-hook')[0] 
-                    inner.style.webkitTransform = `translate3d(${x}px,0,0)`
-                    inner.style.transform = `translate3d(${x}px,0,0)`
+                    inner.style.webkitTransform = `translate(${x}px,0)`
+                    inner.style.transform = `translate(${x}px,0)`
                 }
             }
         },
@@ -58,11 +58,11 @@ export default {
             let rf = el.offsetHeight
             //让动画效果异步执行,提高性能
             this.$nextTick(() => { 
-                el.style.webkitTransform = 'translate3d(0,0,0)'
-                el.style.transform = 'translate3d(0,0,0)'
+                el.style.webkitTransform = 'translate(0,0)'
+                el.style.transform = 'translate(0,0)'
                 let inner = el.getElementsByClassName('inner-hook')[0]
-                inner.style.webkitTransform = 'translate3d(0,0,0)'
-                inner.style.transform = 'translate3d(0,0,0)'
+                inner.style.webkitTransform = 'translate(0,0)'
+                inner.style.transform = 'translate(0,0)'
                 el.addEventListener('transitionend', done) 
             });
         },

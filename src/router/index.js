@@ -175,7 +175,7 @@ export const routes = [
                         name: '设置标题',
                         path: 'a',
                         icon: 'i-icon-home',
-                        component: _import('update/index')
+                        component: _import('study/index')
                     }
                 ]
             }         

@@ -1,59 +1,3 @@
-// 格式化时间
-export function formatTime(time, cFormat) {
-    if (arguments.length === 0) {
-        return null
-    }
-
-    if ((time + '').length === 10) {
-        time = +time * 1000
-    }
-
-    const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
-    let date
-    if (typeof time === 'object') {
-        date = time
-    } else {
-        date = new Date(parseInt(time))
-    }
-    const formatObj = {
-        y: date.getFullYear(),
-        m: date.getMonth() + 1,
-        d: date.getDate(),
-        h: date.getHours(),
-        i: date.getMinutes(),
-        s: date.getSeconds(),
-        a: date.getDay()
-    }
-    const timer = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-        let value = formatObj[key]
-        if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
-        if (result.length > 0 && value < 10) {
-            value = '0' + value
-        }
-        return value || 0
-    })
-    return timer
-}
-
-// 过滤时间差
-export function getDiffTime(time) {
-    const d = new Date(time)
-    const now = Date.now()
-
-    const diff = (now - d) / 1000
-    if (diff < 30) {
-        return '刚刚'
-    } else if (diff < 3600) { // less 1 hour
-        return Math.ceil(diff / 60) + '分钟前'
-    } else if (diff < 3600 * 24) {
-        return Math.ceil(diff / 3600) + '小时前'
-    } else if (diff < 3600 * 24 * 2) {
-        return '1天前'
-    } else {
-        return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
-    }
-}
-
 //  过滤上万数据
 export function toThousand(num) {
     return num >= 10000 ? (num / 10000).toFixed(1) + '万' : num
@@ -65,78 +9,99 @@ export function toThousandFilter(num) {
 }
 
 // 时间数字转字符
-export function getTimeStr(time) {
-    let result = "";
-    if (+time >= 0) {
-        const h = parseInt(parseInt(time) / 3600);
-        const m = parseInt(parseInt(parseInt(time) - h * 3600) / 60);
+export function getTimeStr(t) {
+    var result = "";
+    if (+t >= 0) {
+        var h = parseInt(parseInt(t) / 3600);
+        var m = parseInt(parseInt(parseInt(t) - h * 3600) / 60);
         result = (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
     }
-    return result
+    return result;
 }
 
 // 时间字符转数字
-function getTimeInt(time) {
+export function getTimeInt(time) {
     if (time) {
-        const timeArr = time.split(':');
-        return (parseInt(timeArr[0]) || 0) * 3600 + (parseInt(timeArr[1]) || 0) * 60
+        var time_str = time.split(':');
+        return (parseInt(time_str[0]) || 0) * 3600 + (parseInt(time_str[1]) || 0) * 60
     }
 }
 
 // 格式化文件大小
 export function renderFileSize(size) {
     if (!size) {
-        return '0B'
+        return '0B';
     }
     if (size > 999999) {
-        return parseInt(input / 1000000) + 'MB'
+        return parseInt(size / 1000000) + "MB"
     }
     if (size > 999) {
-        return parseInt(input / 1000) + 'KB'
+        return parseInt(size / 1000) + "KB"
     }
     if (size < 1000) {
-        return `${size}B`
+        return size + "B"
     }
-    return size
+    return size;
+}
+
+// 日期对象格式化
+function dateToStr(date, cFormat) {
+    if (arguments.length === 0) {
+        return null
+    }
+    if (typeof date != 'object') return '';
+
+    cFormat = cFormat || 'yyyy-MM-dd';
+    var formatObj = {
+        M: date.getMonth() + 1,
+        d: date.getDate(),
+        h: date.getHours(),
+        m: date.getMinutes(),
+        s: date.getSeconds()
+    };
+    cFormat = cFormat.replace(/(M+|d+|h+|m+|s+)/g, (result) => {
+        return ((result.length > 1 ? "0" : "") + formatObj[result.slice(-1)]).slice(-2)
+    });
+    return cFormat.replace(/(y+)/g, (result) => {
+        return date.getFullYear().toString().slice(-result.length)
+    });
 }
 
 // unix时间格式化
-function unixToStr(value, strings) {
-    let val = `${value}`;
+export function unixToStr(data, cFormat) {
+    var val = `${data}` || '';
     val = val.replace(/@1/g, '');
     val = val.replace(/@2/g, '');
-    // 'yyyy-MM-dd hh:mm'
-    strings = strings || '{y}-{m}-{d} {h}:{i}:{s}';
-    const intVal = (val.length < 12 ? parseInt(val) * 1000 : parseInt(val)) || 0;
-    return formatTime(new Date(intVal), strings);
+    cFormat = cFormat || 'yyyy-MM-dd hh:mm';
+    var result = (val.length < 12 ? parseInt(val) * 1000 : parseInt(val)) || 0;
+    return dateToStr(new Date(result), cFormat);
 }
 
-// days: 几天前
-function getTodayBefore(days) {
-    const timeStamp = new Date(new Date().setHours(12, 0, 0, 0));
-    return unixToStr(timeStamp - 86400000 * days, '{y}-{m}-{d}');
+export function getTodayBefore(day) {
+    var timeStamp = new Date(new Date().setHours(12, 0, 0, 0));
+    return unixToStr(timeStamp - 86400000 * day, 'yyyy-MM-dd');
 }
 
 // 毫秒转小时
-function SecToHours(val) {
-    const t = getTimeStr(val).split(':')
-    const m = parseInt(t[0]) + (parseFloat((parseInt(t[1]) / 60).toFixed(1)) || '');
-    return parseFloat(m) || 0
+export function getSec2Hours(val) {
+    var t = getTimeStr(val).split(':')
+    var m = parseInt(t[0]) + (parseFloat((parseInt(t[1]) / 60).toFixed(1)) || '');
+    return parseFloat(m) || 0;
 }
 
 // 计算时长
-function getTimeLength(val, offset) {
+export function getTimeLength(val, offset) {
     const arr = (`${val}`).split(',');
     let val1 = parseInt(arr[0]) || 0,
         val2 = parseInt(arr[1]) || 0;
     let result = (val1 > 0 && val2 > val1 ? (val2 - val1) : 0) + (offset || 0);
-    let hours = SecToHours(result);
+    let hours = getSec2Hours(result);
     let days = parseFloat((hours / 24).toFixed(1)) || 0;
     return { hours: hours, days: days }
 }
 
 // 小写金额转大写
-function moneyFormat(num) {
+export function moneyFormat(num) {
     if (isNaN(num)) return '';
     var strPrefix = '';
     if (num < 0) strPrefix = '(负)';

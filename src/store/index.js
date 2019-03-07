@@ -8,6 +8,7 @@ import cache from '@/utils/cache'
 Vue.use(Vuex)
 
 const state = {
+    datas: {},
     user: '',               // 用户信息
     logs: [],               // 错误日志
     theme: '#42B983',        // 主题颜色
@@ -24,6 +25,9 @@ const getters = {
 }
 
 const mutations = {
+    setData(state, data) {
+        state.datas = data
+    },
     login_out(state) {
         state.user = ''
         cache.removeToken()
@@ -46,6 +50,9 @@ const mutations = {
 }
 
 const actions = {
+    setData({ commit }, data) {
+        commit('setData', data)
+    },
     // 获取登录数据
     get_login_data({ commit }, params) {
         return new Promise((resolve, reject) => { 
